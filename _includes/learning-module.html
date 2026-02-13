@@ -1,0 +1,81 @@
+{% assign module = site.data.learning_modules[page.url] %}
+{% if module %}
+<section class="learning-module" aria-labelledby="learn-this-page">
+  <h2 id="learn-this-page">Learn This Page</h2>
+  <p class="learning-module-intro">
+    Use this learning workflow: confirm prerequisites, follow one worked example, then test yourself before coding.
+  </p>
+
+  <div class="learning-grid">
+    {% if module.prerequisites %}
+      <article class="learning-card">
+        <p class="learning-card-title">Prerequisites</p>
+        <ul class="learning-list">
+          {% for item in module.prerequisites %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+
+    {% if module.objectives %}
+      <article class="learning-card">
+        <p class="learning-card-title">Learning Objectives</p>
+        <ul class="learning-list learning-objectives">
+          {% for item in module.objectives %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+  </div>
+
+  {% if module.example %}
+    <article class="learning-card learning-example-card">
+      <p class="learning-card-title">Worked Example Blueprint</p>
+      <p class="learning-example-scenario"><strong>Scenario:</strong> {{ module.example.scenario }}</p>
+      <div class="learning-example-grid">
+        <div class="learning-example-col">
+          <p class="learning-example-label">Input</p>
+          <p class="learning-example-value">{{ module.example.input }}</p>
+        </div>
+        <div class="learning-example-col">
+          <p class="learning-example-label">Transformation</p>
+          <p class="learning-example-value">{{ module.example.transformation }}</p>
+        </div>
+        <div class="learning-example-col">
+          <p class="learning-example-label">Output</p>
+          <p class="learning-example-value">{{ module.example.output }}</p>
+        </div>
+      </div>
+    </article>
+  {% endif %}
+
+  <div class="learning-grid">
+    {% if module.checks %}
+      <article class="learning-card">
+        <p class="learning-card-title">Check Your Understanding</p>
+        <div class="learning-check-list">
+          {% for check in module.checks %}
+            <details class="learning-check">
+              <summary>{{ check.q }}</summary>
+              <p>{{ check.a }}</p>
+            </details>
+          {% endfor %}
+        </div>
+      </article>
+    {% endif %}
+
+    {% if module.practice %}
+      <article class="learning-card">
+        <p class="learning-card-title">Practice Drills</p>
+        <ul class="learning-list">
+          {% for item in module.practice %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endif %}
+  </div>
+</section>
+{% endif %}

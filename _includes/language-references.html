@@ -1,0 +1,30 @@
+{% assign refs = site.data.language_references[page.url] %}
+{% if refs %}
+<section class="reference-hub" aria-label="Official documentation links">
+  <h2 id="official-documentation-links">Official Documentation Links</h2>
+  {% if refs.description %}
+    <p class="reference-hub-intro">{{ refs.description }}</p>
+  {% endif %}
+  <div class="reference-grid">
+    {% for group in refs.groups %}
+      <article class="reference-card">
+        <header class="reference-card-header">
+          <h3>{{ group.label }}</h3>
+          {% if group.kind == 'external' %}
+            <span class="reference-badge is-external">External</span>
+          {% else %}
+            <span class="reference-badge is-stdlib">Official</span>
+          {% endif %}
+        </header>
+        <ul class="reference-list">
+          {% for link in group.links %}
+            <li>
+              <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  markdown-and-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Markdown lint
+        uses: DavidAnson/markdownlint-cli2-action@v18
+        with:
+          globs: "**/*.md"
+
+      - name: Link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --exclude-path .github
+            --exclude-path vendor
+            --exclude-file .lycheeignore
+            "**/*.md"
+
+      - name: Validate curriculum quality gates
+        run: python3 scripts/validate_curriculum.py
+
+  jekyll-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          # Gemfile.lock currently pins google-protobuf 3.23.4 (x86_64-linux), which is not Ruby 3.3 compatible.
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Validate frontend JavaScript syntax
+        run: node --check assets/js/app.js
+      - name: Build site
+        run: bundle exec jekyll build
