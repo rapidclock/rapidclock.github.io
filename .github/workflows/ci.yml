@@ -21,7 +21,6 @@ jobs:
           args: >-
             --verbose
             --no-progress
-            --exclude-mail
             --exclude-path .github
             --exclude-path vendor
             --exclude-file .lycheeignore
@@ -36,7 +35,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          # Gemfile.lock currently pins google-protobuf 3.23.4 (x86_64-linux), which is not Ruby 3.3 compatible.
+          ruby-version: "3.2"
           bundler-cache: true
       - name: Validate frontend JavaScript syntax
         run: node --check assets/js/app.js
