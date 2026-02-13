@@ -4,31 +4,87 @@
   url: /languages/
   summary: Core language operations and standard-library-first recipes.
   children:
+    - title: Basic Syntax Cheatsheet
+      url: /languages/basic-syntax-cheatsheet/
     - title: General
       url: /languages/general/
       children:
         - title: Detailed Concurrency
           url: /languages/general/detailed-concurrency/
-    - title: Language Features
+        - title: Async IO
+          url: /languages/general/async-io/
+        - title: Logging
+          url: /languages/general/logging/
+    - title: Features
       url: /languages/language-features/
       children:
-        - title: Python Features
+        - title: Python
           url: /languages/language-features/python/
-        - title: Rust Features
+        - title: Rust
           url: /languages/language-features/rust/
-        - title: Go Features
+        - title: Go
           url: /languages/language-features/go/
-    - title: Language Specifics
+    - title: Specifics
       url: /languages/language-specifics/
       children:
-        - title: Python Specific Patterns
+        - title: Python
           url: /languages/language-specifics/python-patterns/
-        - title: Rust Specific Patterns
+        - title: Rust
           url: /languages/language-specifics/rust-patterns/
-        - title: Go Specific Patterns
+        - title: Go
           url: /languages/language-specifics/go-patterns/
-    - title: Basic Syntax Cheatsheet
-      url: /languages/basic-syntax-cheatsheet/
+    - title: Frameworks
+      url: /languages/frameworks/
+      children:
+        - title: Python
+          url: /languages/frameworks/python/
+          children:
+            - title: Pandas
+              url: /languages/frameworks/python/pandas/
+            - title: NumPy + SciPy
+              url: /languages/frameworks/python/numpy-scipy/
+            - title: Pydantic
+              url: /languages/frameworks/python/pydantic/
+            - title: FastAPI
+              url: /languages/frameworks/python/fastapi/
+            - title: AsyncSSH
+              url: /languages/frameworks/python/asyncssh/
+            - title: HTTPX
+              url: /languages/frameworks/python/httpx/
+            - title: Requests
+              url: /languages/frameworks/python/requests/
+            - title: SQLAlchemy
+              url: /languages/frameworks/python/sqlalchemy/
+            - title: Pytest + Unittest + Mocking
+              url: /languages/frameworks/python/testing-mocking/
+        - title: Rust
+          url: /languages/frameworks/rust/
+          children:
+            - title: Tokio
+              url: /languages/frameworks/rust/tokio/
+            - title: Tower + Axum
+              url: /languages/frameworks/rust/tower-axum/
+            - title: Reqwest
+              url: /languages/frameworks/rust/reqwest/
+            - title: Serde + Serde JSON
+              url: /languages/frameworks/rust/serde-serde-json/
+            - title: anyhow + thiserror
+              url: /languages/frameworks/rust/anyhow-thiserror/
+            - title: parking_lot
+              url: /languages/frameworks/rust/parking-lot/
+            - title: Rayon
+              url: /languages/frameworks/rust/rayon/
+        - title: Go
+          url: /languages/frameworks/go/
+          children:
+            - title: Gin
+              url: /languages/frameworks/go/gin/
+            - title: Echo
+              url: /languages/frameworks/go/echo/
+            - title: GORM
+              url: /languages/frameworks/go/gorm/
+    - title: Functional Programming
+      url: /languages/functional-programming/
     - title: Arrays
       url: /languages/arrays/
     - title: Dictionaries
@@ -37,6 +93,8 @@
       url: /languages/sets/
     - title: Open, Read & Write to A File
       url: /languages/file-io/
+    - title: File Formats
+      url: /languages/file-formats/
     - title: TCP Streams
       url: /languages/tcp-streams/
     - title: HTTP Client
@@ -75,8 +133,17 @@
               url: /data-structures/trees/avl-tree/
         - title: Heaps
           url: /data-structures/trees/heaps/
+        - title: Segment Tree
+          url: /data-structures/trees/segment-tree/
+        - title: Fenwick Tree
+          url: /data-structures/trees/fenwick-tree/
     - title: Graphs
       url: /data-structures/graphs/
+    - title: Misc
+      url: /data-structures/misc/
+      children:
+        - title: Union-Find
+          url: /data-structures/misc/union-find/
 - title: Algorithms
   url: /algorithms/
   summary: Time-space tradeoffs, walkthroughs, and complete language implementations.

@@ -1,5 +1,5 @@
 ---
-title: Python Specific Patterns
+title: Python
 description: Idiomatic Python patterns with detailed explanations, pros/cons, use cases, and edge-case guidance.
 permalink: /languages/language-specifics/python-patterns/
 ---
@@ -427,3 +427,257 @@ print(outputs)
    Blocking calls in async loops can freeze concurrency.
 5. Hidden shared state:
    Module-level mutable objects can create hard-to-debug coupling.
+
+## Advanced Pattern Layer
+
+## Pattern 9: Custom Exception Taxonomy For Domain Boundaries
+
+### Basic Idea
+
+Define a small domain-specific exception hierarchy so callers can branch on failure type instead of parsing strings.
+
+### Pros
+
+- explicit failure contract
+- cleaner retry and HTTP/status mapping logic
+- easier observability by error class
+
+### Cons
+
+- too many exception types can create maintenance overhead
+
+### When To Use
+
+- service/domain boundaries
+- parsing/validation layers
+- adapters around external systems
+
+### Example
+
+```python
+class AppError(Exception):
+    """Base class for application-domain errors."""
+
+
+class ValidationError(AppError):
+    pass
+
+
+class RetryableDependencyError(AppError):
+    pass
+
+
+def parse_port(raw: str) -> int:
+    value = raw.strip()
+    if not value:
+        raise ValidationError("port is required")
+    try:
+        port = int(value)
+    except ValueError as exc:
+        raise ValidationError("port must be numeric") from exc
+
+    if not (1 <= port <= 65535):
+        raise ValidationError("port out of range")
+    return port
+```
+
+### Edge Cases
+
+- Avoid exposing low-level error types directly across boundary layers.
+- Preserve exception cause with `raise ... from ...` for deep diagnostics.
+
+## Pattern 10: Request-Scoped Context With `contextvars`
+
+### Basic Idea
+
+Use `contextvars` for request/task-scoped metadata in async and mixed concurrency code.
+
+### Pros
+
+- avoids passing context fields through every function signature
+- safe per-task context separation in async workflows
+
+### Cons
+
+- implicit context can be harder to reason about if overused
+
+### When To Use
+
+- request ID propagation
+- tenant/account scoping in middleware-style code
+- structured logging enrichment
+
+### Example
+
+```python
+import contextvars
+import logging
+
+request_id_var = contextvars.ContextVar("request_id", default="-")
+log = logging.getLogger("app")
+
+
+def set_request_id(request_id: str) -> None:
+    request_id_var.set(request_id)
+
+
+def log_info(msg: str) -> None:
+    rid = request_id_var.get()
+    log.info("request_id=%s %s", rid, msg)
+```
+
+### Edge Cases
+
+- Reset/override context deliberately in worker pools and background task boundaries.
+- Do not use context vars as an untyped global data bag.
+
+## Pattern 11: Composition-First Service Objects
+
+### Basic Idea
+
+Compose service behavior from small collaborators instead of inheritance-heavy class trees.
+
+### Pros
+
+- clearer dependency boundaries
+- easier testing with protocol-based substitutes
+- lower coupling
+
+### Cons
+
+- can introduce more constructor wiring if not organized well
+
+### When To Use
+
+- business workflows combining repositories, clients, and policy modules
+
+### Example
+
+```python
+from dataclasses import dataclass
+from typing import Protocol
+
+
+class UserRepo(Protocol):
+    def exists(self, user_id: int) -> bool:
+        ...
+
+
+class Notifier(Protocol):
+    def send(self, user_id: int, msg: str) -> None:
+        ...
+
+
+@dataclass
+class UserService:
+    repo: UserRepo
+    notifier: Notifier
+
+    def welcome(self, user_id: int) -> None:
+        if not self.repo.exists(user_id):
+            raise ValueError("user not found")
+        self.notifier.send(user_id, "welcome")
+```
+
+### Edge Cases
+
+- Keep service methods small; orchestration layers should not absorb all business logic.
+- Prefer explicit constructor wiring over hidden global singletons.
+
+## Pattern 12: Retry Policy As A First-Class Primitive
+
+### Basic Idea
+
+Centralize retry behavior in one reusable function so retry rules stay consistent across call sites.
+
+### Pros
+
+- consistent timeout/backoff behavior
+- easier auditing of retryable vs non-retryable errors
+
+### Cons
+
+- incorrect retry classification can cause duplicate side effects
+
+### When To Use
+
+- network and storage boundary adapters
+- queue/message ack/retry flows
+
+### Example
+
+```python
+from collections.abc import Callable
+import time
+
+
+def retry_call(fn: Callable[[], str], attempts: int = 3, base_delay: float = 0.1) -> str:
+    last_exc: Exception | None = None
+    for i in range(attempts):
+        try:
+            return fn()
+        except TimeoutError as exc:
+            last_exc = exc
+            if i == attempts - 1:
+                break
+            time.sleep(base_delay * (2**i))
+    assert last_exc is not None
+    raise last_exc
+```
+
+### Edge Cases
+
+- Retry only idempotent operations by default.
+- Combine retries with absolute deadline/time budget.
+
+## Architecture Playbooks (Python Specifics)
+
+### API + Domain + Adapter Split
+
+- API layer: validation and transport mapping
+- Domain layer: business rules, typed exceptions
+- Adapter layer: persistence/external IO with retry/timeouts
+
+### Batch/Worker Pipeline
+
+- ingestion stage: parse + validate
+- transform stage: pure functions/generator pipelines
+- sink stage: side effects + explicit retry policy
+
+### Tooling/CLI Service
+
+- config parse early with explicit validation errors
+- single logging setup function at startup
+- exit codes mapped from domain exception classes
+
+## Testing and Verification Checklist
+
+1. Unit test each pattern boundary (decorator behavior, context manager cleanup, protocol substitution).
+2. Test exception taxonomy mapping to user-facing/API-facing outputs.
+3. Add regression fixtures for generator pipelines and streaming behavior.
+4. Verify retry helpers do not re-run non-idempotent paths unintentionally.
+5. Add stress tests where async + context propagation interact.
+
+## Python-Specific Anti-Patterns and Fixes
+
+1. `except Exception: pass`
+   Fix: catch expected subclasses and log/propagate unexpected failures.
+2. Hidden globals for runtime state
+   Fix: inject dependencies explicitly via constructor/function params.
+3. Long `async` functions doing blocking work
+   Fix: isolate blocking operations in executors/process pools.
+4. Decorators without clear contracts
+   Fix: document behavior and preserve metadata with `functools.wraps`.
+5. Validation in too many layers
+   Fix: validate once at trust boundary, then keep internal models stable.
+
+## Advanced Pattern Selection Guide
+
+| Problem | Strong pattern |
+| --- | --- |
+| need actionable error classification | custom exception taxonomy |
+| request metadata should flow through async calls | `contextvars` |
+| avoid deep inheritance in service code | composition-first services |
+| repeated outbound calls need controlled retries | first-class retry primitive |
+| resource cleanup must always occur | context manager |
+| large data stream transformation | generator pipeline |

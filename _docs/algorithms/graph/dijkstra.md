@@ -257,3 +257,34 @@ func main() {
 
 </div>
 </div>
+
+## Advanced Cookbook Additions
+
+### Decision Checklist Before Using Dijkstra
+
+1. Are all edge weights non-negative?
+2. Do you need single-source shortest paths or all-pairs?
+3. Is graph sparse enough that heap-based implementation is appropriate?
+4. Do you also need path reconstruction (parent tracking)?
+
+### Reliability Pattern: Distance + Parent Arrays
+
+Store both:
+
+- `dist[v]`: shortest distance discovered
+- `parent[v]`: predecessor on best-known path
+
+This allows deterministic path reconstruction and easier debugging.
+
+### Common Performance Improvements
+
+1. Skip stale heap entries (`if popped_distance > dist[u]: continue`).
+2. Use adjacency lists for sparse graphs.
+3. Avoid repeated heap pushes for unchanged distances.
+4. Use integer weights/types that avoid overflow for expected maxima.
+
+### Failure Modes
+
+1. Negative edge introduced by data bug silently invalidates correctness.
+2. Integer overflow on large accumulated path sums.
+3. Forgetting disconnected-node handling in output contract.

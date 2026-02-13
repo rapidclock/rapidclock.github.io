@@ -271,3 +271,41 @@ func main() {
 | Membership check | O(1) |
 | Delete | O(1) |
 | Union/intersection/difference | O(len(a) + len(b)) |
+
+## Advanced Cookbook Additions
+
+### Pattern: Set Algebra for State Transitions
+
+Sets are ideal for expressing changes between snapshots:
+
+- `added = new - old`
+- `removed = old - new`
+- `unchanged = old & new`
+
+This is common in sync engines, permissions diffing, and cache invalidation logic.
+
+### How-To: Snapshot Diff
+
+```python
+def diff_snapshots(old_ids: set[int], new_ids: set[int]) -> dict[str, set[int]]:
+    return {
+        "added": new_ids - old_ids,
+        "removed": old_ids - new_ids,
+        "unchanged": old_ids & new_ids,
+    }
+```
+
+### Pattern: Membership Guard Rails
+
+Use sets to protect expensive operations:
+
+1. build set of already-processed IDs
+2. skip duplicate work early
+3. keep side effects idempotent where possible
+
+### Caveats
+
+1. Sets are unordered; order-sensitive behavior needs additional structure.
+2. Elements must be hashable and stable.
+3. Very large sets can consume significant memory; consider compressed/bitmap alternatives when domain is dense and bounded.
+4. Concurrent mutation of shared sets requires synchronization.

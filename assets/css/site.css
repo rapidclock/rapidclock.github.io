@@ -168,6 +168,8 @@ a:hover {
   gap: 1.25rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 120;
 }
 
 .eyebrow {
@@ -768,6 +770,19 @@ pre code {
   flex: 1;
   max-width: 460px;
   position: relative;
+  z-index: 140;
+}
+
+@media (min-width: 981px) {
+  .search-wrap {
+    position: fixed;
+    top: 1rem;
+    right: clamp(1rem, 2vw, 2.2rem);
+    width: min(460px, calc(100vw - 360px));
+    min-width: 280px;
+    max-width: none;
+    z-index: 160;
+  }
 }
 
 #search-input {
@@ -787,7 +802,7 @@ pre code {
 .search-results {
   display: none;
   position: absolute;
-  z-index: 30;
+  z-index: 220;
   top: calc(100% + 0.4rem);
   left: 0;
   right: 0;
@@ -822,6 +837,12 @@ pre code {
 .search-title {
   font-weight: 600;
   margin-bottom: 0.15rem;
+}
+
+.search-context {
+  color: #b7cae0;
+  font-size: 0.77rem;
+  margin-bottom: 0.18rem;
 }
 
 .search-snippet {
@@ -874,6 +895,171 @@ pre code {
   display: grid;
   gap: 0.42rem;
   margin-top: 0.05rem;
+}
+
+.operation-anim-viz {
+  border: 1px solid #2b425f;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #11263b 0%, #0f2134 100%);
+  padding: 0.5rem 0.55rem 0.35rem;
+}
+
+.operation-anim-viz-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.operation-anim-viz-edge {
+  stroke: #355775;
+  stroke-width: 2.2;
+  opacity: 0.46;
+  stroke-linecap: round;
+  transition: stroke 0.18s ease, stroke-width 0.18s ease, opacity 0.18s ease;
+}
+
+.operation-anim-viz-edge.is-active {
+  stroke: #80cdff;
+  stroke-width: 3.4;
+  opacity: 1;
+  animation: operation-viz-edge-pulse 1s ease-in-out infinite alternate;
+}
+
+.operation-anim-viz-node-box {
+  fill: #152b44;
+  stroke: #355775;
+  stroke-width: 2;
+  transition: fill 0.18s ease, stroke 0.18s ease, opacity 0.18s ease;
+}
+
+.operation-anim-viz-node-text {
+  fill: #dceaf7;
+  font-size: 12px;
+  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, monospace;
+  pointer-events: none;
+}
+
+.operation-anim-viz-node.is-active .operation-anim-viz-node-box {
+  fill: #1c4061;
+  stroke: #8fd6ff;
+  animation: operation-viz-node-pulse 1s ease-in-out infinite alternate;
+}
+
+.operation-anim-viz-node.is-active .operation-anim-viz-node-text {
+  fill: #f2fbff;
+}
+
+.operation-anim-viz-node.is-muted .operation-anim-viz-node-box,
+.operation-anim-viz-node.is-muted .operation-anim-viz-node-text {
+  opacity: 0.36;
+}
+
+.operation-anim-viz-caption {
+  margin: 0.35rem 0 0;
+  color: #aac4db;
+  font-size: 0.76rem;
+}
+
+.operation-anim-auto {
+  display: grid;
+  gap: 0.45rem;
+  border: 1px solid #2b425f;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #11263b 0%, #0f2134 100%);
+  padding: 0.45rem 0.5rem;
+}
+
+.operation-anim-auto-lane {
+  display: grid;
+  grid-template-columns: 7.4rem minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.operation-anim-auto-label {
+  color: #9ec0dc;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.operation-anim-auto-track {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
+.operation-anim-auto-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.6rem;
+  border: 1px solid #365676;
+  border-radius: 8px;
+  padding: 0.13rem 0.45rem;
+  background: #173450;
+  color: #e2eef9;
+  font-size: 0.76rem;
+  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, monospace;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease, opacity 0.16s ease;
+}
+
+.operation-anim-auto-token.is-highlight {
+  border-color: #8bcfff;
+  background: #255478;
+}
+
+.operation-anim-auto-token.is-change {
+  border-color: #a5ddff;
+  background: #2a5f87;
+  transform: translateY(-1px);
+  animation: operation-auto-token-flash 0.5s ease;
+}
+
+.operation-anim-auto-token.is-meta {
+  border-style: dashed;
+  color: #b8cce0;
+  background: #122a43;
+}
+
+.operation-anim-auto-connector {
+  color: #8fb4d3;
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.operation-anim-auto-empty {
+  color: #6f8ca8;
+  font-size: 0.9rem;
+}
+
+@keyframes operation-viz-node-pulse {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(1.16);
+  }
+}
+
+@keyframes operation-viz-edge-pulse {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes operation-auto-token-flash {
+  from {
+    filter: brightness(1.26);
+  }
+  to {
+    filter: brightness(1);
+  }
 }
 
 .operation-anim-state-row {

@@ -307,3 +307,48 @@ func main() {
 | Append at end | O(1) amortized | O(n) | Resize/copy on capacity growth |
 | Insert/delete middle | O(n) | O(n) | Shift elements |
 | Search unsorted | O(n) | O(n) | Linear scan |
+
+## Advanced Cookbook Additions
+
+### Pattern: Two-Phase Transform Pipelines
+
+For non-trivial array/list transformations, separate logic into:
+
+1. normalization phase (type cleanup, guards, bounds)
+2. compute phase (map/filter/reduce/window logic)
+
+This reduces hidden bugs from mixing validation and transformation in one loop.
+
+### Pattern: Stable In-Place Partitioning Tradeoff
+
+In-place partitioning is memory efficient but often hurts readability and can introduce subtle index bugs.
+
+Use in-place updates only when:
+
+- input size justifies reduced allocations
+- mutation semantics are acceptable
+- tests cover boundary movement thoroughly
+
+### How-To: Sliding Window Baseline Utility
+
+```python
+def window_sums(nums: list[int], k: int) -> list[int]:
+    if k <= 0 or k > len(nums):
+        raise ValueError("invalid k")
+
+    out: list[int] = []
+    s = sum(nums[:k])
+    out.append(s)
+
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        out.append(s)
+    return out
+```
+
+### Production Checklist
+
+1. Validate input size and index bounds at boundaries.
+2. Avoid hidden quadratic behavior (nested scans in hot paths).
+3. Prefer generator/pipeline style when memory pressure is a concern.
+4. Benchmark with realistic data distributions, not tiny toy arrays.

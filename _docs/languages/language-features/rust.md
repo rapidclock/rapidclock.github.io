@@ -1,5 +1,5 @@
 ---
-title: Rust Features
+title: Rust
 description: Detailed Rust language features, ownership model, and systems-level guarantees.
 permalink: /languages/language-features/rust/
 ---

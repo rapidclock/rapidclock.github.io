@@ -19,10 +19,13 @@ This page is a dense fundamentals reference for day-to-day coding:
 
 For deeper topic-focused pages, continue with:
 
+- [Frameworks]({{ '/languages/frameworks/' | relative_url }})
+- [Functional Programming]({{ '/languages/functional-programming/' | relative_url }})
 - [Arrays]({{ '/languages/arrays/' | relative_url }})
 - [Dictionaries]({{ '/languages/dictionaries/' | relative_url }})
 - [Sets]({{ '/languages/sets/' | relative_url }})
 - [Open, Read & Write to A File]({{ '/languages/file-io/' | relative_url }})
+- [File Formats]({{ '/languages/file-formats/' | relative_url }})
 - [TCP Streams]({{ '/languages/tcp-streams/' | relative_url }})
 - [HTTP Client]({{ '/languages/http-client/' | relative_url }})
 
@@ -1162,6 +1165,287 @@ func TestAdd(t *testing.T) {
 ```
 
 Run with `go test ./...`.
+
+</div>
+</div>
+
+## Data Models: Classes, Structs, and Methods
+
+<div class="code-tabs">
+<div class="tab-panel" data-lang="python" markdown="1">
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class User:
+    id: int
+    email: str
+
+    def masked_email(self) -> str:
+        name, domain = self.email.split("@", 1)
+        return f"{name[0]}***@{domain}"
+
+
+u = User(id=7, email="ada@example.com")
+print(u.masked_email())
+```
+
+</div>
+<div class="tab-panel" data-lang="rust" markdown="1">
+
+```rust
+#[derive(Debug)]
+struct User {
+    id: u64,
+    email: String,
+}
+
+impl User {
+    fn new(id: u64, email: impl Into<String>) -> Self {
+        Self { id, email: email.into() }
+    }
+
+    fn masked_email(&self) -> String {
+        if let Some((name, domain)) = self.email.split_once('@') {
+            let first = name.chars().next().unwrap_or('*');
+            return format!("{}***@{}", first, domain);
+        }
+        "***".to_string()
+    }
+}
+
+fn main() {
+    let u = User::new(7, "ada@example.com");
+    println!("{}", u.masked_email());
+}
+```
+
+</div>
+<div class="tab-panel" data-lang="go" markdown="1">
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+type User struct {
+	ID    int64
+	Email string
+}
+
+func (u User) MaskedEmail() string {
+	parts := strings.SplitN(u.Email, "@", 2)
+	if len(parts) != 2 || len(parts[0]) == 0 {
+		return "***"
+	}
+	return fmt.Sprintf("%c***@%s", parts[0][0], parts[1])
+}
+
+func main() {
+	u := User{ID: 7, Email: "ada@example.com"}
+	fmt.Println(u.MaskedEmail())
+}
+```
+
+</div>
+</div>
+
+## Optional / Null-Like Values
+
+<div class="code-tabs">
+<div class="tab-panel" data-lang="python" markdown="1">
+
+```python
+from typing import Optional
+
+
+def parse_age(raw: str) -> Optional[int]:
+    raw = raw.strip()
+    if not raw:
+        return None
+    return int(raw)
+
+
+age = parse_age("42")
+if age is None:
+    print("missing")
+else:
+    print(age + 1)
+```
+
+</div>
+<div class="tab-panel" data-lang="rust" markdown="1">
+
+```rust
+fn parse_age(raw: &str) -> Option<u32> {
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return None;
+    }
+    trimmed.parse::<u32>().ok()
+}
+
+fn main() {
+    match parse_age("42") {
+        Some(age) => println!("{}", age + 1),
+        None => println!("missing"),
+    }
+}
+```
+
+</div>
+<div class="tab-panel" data-lang="go" markdown="1">
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+func parseAge(raw string) (*int, error) {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return nil, nil
+	}
+	n, err := strconv.Atoi(raw)
+	if err != nil {
+		return nil, err
+	}
+	return &n, nil
+}
+
+func main() {
+	age, err := parseAge("42")
+	if err != nil {
+		fmt.Println("invalid age")
+		return
+	}
+	if age == nil {
+		fmt.Println("missing")
+		return
+	}
+	fmt.Println(*age + 1)
+}
+```
+
+</div>
+</div>
+
+## CLI Arguments and Environment Variables
+
+<div class="code-tabs">
+<div class="tab-panel" data-lang="python" markdown="1">
+
+```python
+import argparse
+import os
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--port", type=int, default=8080)
+args = parser.parse_args()
+
+env_mode = os.getenv("APP_ENV", "dev")
+print(args.port, env_mode)
+```
+
+</div>
+<div class="tab-panel" data-lang="rust" markdown="1">
+
+```rust
+use std::env;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let port = args.get(1).and_then(|s| s.parse::<u16>().ok()).unwrap_or(8080);
+    let app_env = env::var("APP_ENV").unwrap_or_else(|_| "dev".to_string());
+
+    println!("port={} env={}", port, app_env);
+}
+```
+
+</div>
+<div class="tab-panel" data-lang="go" markdown="1">
+
+```go
+package main
+
+import (
+	"flag"
+	"fmt"
+	"os"
+)
+
+func main() {
+	port := flag.Int("port", 8080, "server port")
+	flag.Parse()
+
+	env := os.Getenv("APP_ENV")
+	if env == "" {
+		env = "dev"
+	}
+
+	fmt.Printf("port=%d env=%s\n", *port, env)
+}
+```
+
+</div>
+</div>
+
+## Logging Quick Start
+
+For production logging strategy (structured fields, multi-destination sinks, filtering, redaction), use:
+
+- [Logging]({{ '/languages/general/logging/' | relative_url }})
+
+Quick baseline snippets:
+
+<div class="code-tabs">
+<div class="tab-panel" data-lang="python" markdown="1">
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s %(message)s")
+log = logging.getLogger("app")
+log.info("startup", extra={"component": "api"})
+```
+
+</div>
+<div class="tab-panel" data-lang="rust" markdown="1">
+
+```rust
+use tracing::info;
+
+fn main() {
+    tracing_subscriber::fmt().with_max_level(tracing::Level::INFO).init();
+    info!(component = "api", "startup");
+}
+```
+
+</div>
+<div class="tab-panel" data-lang="go" markdown="1">
+
+```go
+package main
+
+import (
+	"log/slog"
+	"os"
+)
+
+func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+	logger.Info("startup", "component", "api")
+}
+```
 
 </div>
 </div>

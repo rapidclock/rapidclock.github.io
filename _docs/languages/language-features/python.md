@@ -1,5 +1,5 @@
 ---
-title: Python Features
+title: Python
 description: Detailed Python language features, semantics, and idiomatic usage patterns.
 permalink: /languages/language-features/python/
 ---

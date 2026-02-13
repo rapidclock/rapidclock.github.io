@@ -247,3 +247,42 @@ func main() {
 - Validate response status codes.
 - Parse and validate response body shape.
 - Add retry/backoff only for safe/idempotent operations unless API contract allows otherwise.
+
+## Advanced Cookbook Additions
+
+### Request Policy Template
+
+Define one policy object/module for the entire service:
+
+- connect/read timeout budget
+- retry rules by method/status/error type
+- authentication header strategy
+- idempotency policy for writes
+
+Centralizing this prevents inconsistent behavior across endpoints.
+
+### Error Taxonomy (Recommended)
+
+Classify failures into stable categories:
+
+1. timeout
+2. transient network
+3. upstream contract error (4xx)
+4. upstream availability error (5xx)
+5. decode/validation error
+
+Map raw client exceptions into these categories early.
+
+### Observability Checklist
+
+1. log endpoint, latency, status class, retry count
+2. propagate request/correlation IDs to downstream calls
+3. redact secrets in logs and traces
+4. track p95/p99 per upstream dependency
+
+### Common Pitfalls
+
+1. missing timeout defaults (can hang indefinitely)
+2. retrying non-idempotent writes without dedupe strategy
+3. creating a new client/session per request and losing pooling benefits
+4. mixing multiple HTTP clients with different defaults in one service
