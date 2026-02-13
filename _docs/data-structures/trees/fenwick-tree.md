@@ -62,6 +62,12 @@ Choose segment tree when:
 - Indexing/bit tricks are non-obvious at first.
 - Not ideal for complex non-invertible range aggregates.
 
+## Use Cases
+
+- Online prefix-sum queries with frequent point updates.
+- Range-sum queries implemented as `prefix(r) - prefix(l-1)`.
+- Competitive-programming or production counters where low constant factors matter.
+
 ## Mental Model: What `bit[i]` Actually Stores
 
 For internal 1-indexed array, Fenwick invariant is:
@@ -272,7 +278,7 @@ prefix_sum(i):
   return s
 ```
 
-## Full Complete Examples
+## Full Examples
 
 <div class="code-tabs">
 <div class="tab-panel" data-lang="python" markdown="1">

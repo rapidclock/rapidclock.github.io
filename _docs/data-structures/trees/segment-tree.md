@@ -156,6 +156,10 @@ Why `4*n`?
 - avoids complicated exact sizing for non-power-of-two `n`
 - memory is still linear in `n`
 
+## Detailed Explanation
+
+Segment trees recursively split ranges and store merged results at internal nodes, so each query/update touches only `O(log n)` nodes instead of scanning full ranges.
+
 ## Operations Step-by-Step (Detailed)
 
 ### Build
@@ -277,7 +281,7 @@ query(node, l, r, ql, qr):
   return query(left, l, mid, ql, qr) + query(right, mid+1, r, ql, qr)
 ```
 
-## Full Complete Examples
+## Full Examples
 
 <div class="code-tabs">
 <div class="tab-panel" data-lang="python" markdown="1">

@@ -289,6 +289,21 @@ Combined complexity is effectively near-constant amortized: `O(alpha(n))`, where
 
 `alpha(n)` grows extremely slowly and is < 5 for realistic input sizes.
 
+## Detailed Explanation
+
+The optimized structure combines **union by rank** and **path compression** so trees stay shallow over time.
+Together, they make repeated connectivity checks very fast in practice.
+
+## Pros
+
+- Extremely fast amortized operations for large connectivity workloads.
+- Simple data layout (`parent`, optional `rank`/`size`) and low memory overhead.
+
+## Cons
+
+- Supports merges only; it does not support efficient edge deletions.
+- Best suited for connectivity/equivalence queries, not general graph traversal.
+
 ## Step-by-Step: Union by Rank
 
 Suppose roots are `ra` and `rb`:
@@ -458,7 +473,7 @@ union(a, b):
   return true
 ```
 
-## Full Complete Examples
+## Full Examples
 
 <div class="code-tabs">
 <div class="tab-panel" data-lang="python" markdown="1">
@@ -654,7 +669,7 @@ func main() {
 </div>
 </div>
 
-## Advanced Use Cases
+## Use Cases
 
 ### Kruskal's MST
 

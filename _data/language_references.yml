@@ -447,3 +447,87 @@
           url: "https://pkg.go.dev/testing"
         - title: "Go Code Review Comments"
           url: "https://go.dev/wiki/CodeReviewComments"
+
+"/languages/frameworks/go/echo/":
+  description: "References for Echo usage and HTTP patterns."
+  groups: []
+
+"/languages/frameworks/go/gin/":
+  description: "References for Gin routing and middleware patterns."
+  groups: []
+
+"/languages/frameworks/go/gorm/":
+  description: "References for GORM ORM usage patterns."
+  groups: []
+
+"/languages/frameworks/python/asyncssh/":
+  description: "References for AsyncSSH usage patterns."
+  groups: []
+
+"/languages/frameworks/python/fastapi/":
+  description: "References for FastAPI endpoint and validation patterns."
+  groups: []
+
+"/languages/frameworks/python/httpx/":
+  description: "References for HTTPX client usage patterns."
+  groups: []
+
+"/languages/frameworks/python/numpy-scipy/":
+  description: "References for NumPy/SciPy numerical computing patterns."
+  groups: []
+
+"/languages/frameworks/python/pandas/":
+  description: "References for Pandas dataframe workflows."
+  groups: []
+
+"/languages/frameworks/python/pydantic/":
+  description: "References for Pydantic validation and schema patterns."
+  groups: []
+
+"/languages/frameworks/python/requests/":
+  description: "References for Requests HTTP workflows."
+  groups: []
+
+"/languages/frameworks/python/sqlalchemy/":
+  description: "References for SQLAlchemy ORM and query patterns."
+  groups: []
+
+"/languages/frameworks/python/testing-mocking/":
+  description: "References for testing and mocking patterns."
+  groups: []
+
+"/languages/frameworks/rust/anyhow-thiserror/":
+  description: "References for anyhow/thiserror error-handling patterns."
+  groups: []
+
+"/languages/frameworks/rust/parking-lot/":
+  description: "References for parking_lot synchronization primitives."
+  groups: []
+
+"/languages/frameworks/rust/rayon/":
+  description: "References for Rayon data-parallel patterns."
+  groups: []
+
+"/languages/frameworks/rust/reqwest/":
+  description: "References for Reqwest client usage patterns."
+  groups: []
+
+"/languages/frameworks/rust/serde-serde-json/":
+  description: "References for Serde and serde_json serialization patterns."
+  groups: []
+
+"/languages/frameworks/rust/tokio/":
+  description: "References for Tokio async runtime patterns."
+  groups: []
+
+"/languages/frameworks/rust/tower-axum/":
+  description: "References for tower/axum web-service patterns."
+  groups: []
+
+"/languages/functional-programming/":
+  description: "References for functional programming concepts across languages."
+  groups: []
+
+"/languages/general/async-io/":
+  description: "References for async I/O patterns across languages."
+  groups: []
