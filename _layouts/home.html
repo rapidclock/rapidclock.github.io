@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-baseurl="{{ site.baseurl }}">
+  <head>
+    {% include head.html %}
+  </head>
+  <body class="home-body">
+    <main class="home-main">
+      <section class="hero">
+        <p class="eyebrow">GitHub Pages Reference</p>
+        <h1>CS Cookbook</h1>
+        <p class="hero-copy">A topic-first computer science coding handbook with structured explanations, complexity analysis, and idiomatic Python, Rust, and Go snippets.</p>
+        <a class="hero-cta" href="{{ '/languages/' | relative_url }}">Start with Languages</a>
+      </section>
+
+      <section class="topic-grid" aria-label="Main topics">
+        {% for item in site.data.navigation %}
+          {% if item.url != '/' %}
+            <a class="topic-card" href="{{ item.url | relative_url }}">
+              <h2>{{ item.title }}</h2>
+              {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </section>
+      <footer class="page-footer">
+        {% include copyright-notice.html %}
+      </footer>
+    </main>
+    <script src="{{ '/assets/js/app.js' | relative_url }}" defer></script>
+  </body>
+</html>

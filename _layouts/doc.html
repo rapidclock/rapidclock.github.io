@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-baseurl="{{ site.baseurl }}">
+  <head>
+    {% include head.html %}
+  </head>
+  <body class="app-shell">
+    <button id="sidebar-toggle" class="mobile-sidebar-toggle" aria-label="Toggle navigation">Menu</button>
+    <aside id="sidebar" class="sidebar">
+      {% include sidebar.html %}
+    </aside>
+    <main class="main-content">
+      <header class="content-header">
+        <div class="header-title-wrap">
+          <p class="eyebrow">CS Cookbook</p>
+          <h1>{{ page.title }}</h1>
+        </div>
+        <div class="search-wrap">
+          <label for="search-input" class="visually-hidden">Search cookbook</label>
+          <input id="search-input" type="search" placeholder="Search topics, terms, or code..." autocomplete="off" />
+          <div id="search-results" class="search-results" aria-live="polite"></div>
+        </div>
+      </header>
+      {% include breadcrumbs.html %}
+      <div class="content-grid">
+        <article class="doc-content">
+          {{ content }}
+          {% include language-references.html %}
+        </article>
+        <aside class="section-rail" aria-label="Section navigation">
+          <nav id="section-nav" class="section-nav" aria-label="On this page">
+            <p class="section-nav-title">On This Page</p>
+            <ul id="section-nav-list" class="section-nav-list"></ul>
+          </nav>
+        </aside>
+      </div>
+      <footer class="page-footer">
+        <p>Built for practical, language-idiomatic reference workflows.</p>
+        {% include copyright-notice.html %}
+      </footer>
+    </main>
+    <script src="{{ '/assets/js/app.js' | relative_url }}" defer></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+<div class="sidebar-header">
+  <a href="{{ '/' | relative_url }}" class="brand-link">CS Cookbook</a>
+  <p class="sidebar-subtitle">Main Topics, Subtopics, and deep references</p>
+</div>
+<nav class="tree-nav" aria-label="Cookbook hierarchy">
+  <ul class="nav-root">
+    {% for item in site.data.navigation %}
+      {% include nav-node.html item=item current_url=page.url %}
+    {% endfor %}
+  </ul>
+</nav>

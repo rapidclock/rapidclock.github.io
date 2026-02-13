@@ -1,0 +1,115 @@
+- title: Home
+  url: /
+- title: Languages
+  url: /languages/
+  summary: Core language operations and standard-library-first recipes.
+  children:
+    - title: General
+      url: /languages/general/
+      children:
+        - title: Detailed Concurrency
+          url: /languages/general/detailed-concurrency/
+    - title: Language Features
+      url: /languages/language-features/
+      children:
+        - title: Python Features
+          url: /languages/language-features/python/
+        - title: Rust Features
+          url: /languages/language-features/rust/
+        - title: Go Features
+          url: /languages/language-features/go/
+    - title: Language Specifics
+      url: /languages/language-specifics/
+      children:
+        - title: Python Specific Patterns
+          url: /languages/language-specifics/python-patterns/
+        - title: Rust Specific Patterns
+          url: /languages/language-specifics/rust-patterns/
+        - title: Go Specific Patterns
+          url: /languages/language-specifics/go-patterns/
+    - title: Basic Syntax Cheatsheet
+      url: /languages/basic-syntax-cheatsheet/
+    - title: Arrays
+      url: /languages/arrays/
+    - title: Dictionaries
+      url: /languages/dictionaries/
+    - title: Sets
+      url: /languages/sets/
+    - title: Open, Read & Write to A File
+      url: /languages/file-io/
+    - title: TCP Streams
+      url: /languages/tcp-streams/
+    - title: HTTP Client
+      url: /languages/http-client/
+- title: Data Structures
+  url: /data-structures/
+  summary: Concept-first deep references with complexity analysis and idiomatic implementations.
+  children:
+    - title: Lists
+      url: /data-structures/lists/
+      children:
+        - title: Linked List
+          url: /data-structures/lists/linked-list/
+          children:
+            - title: Singly Linked List
+              url: /data-structures/lists/linked-list/singly/
+            - title: Doubly Linked List
+              url: /data-structures/lists/linked-list/doubly/
+            - title: Circular & Ring Buffers
+              url: /data-structures/lists/linked-list/circular-ring-buffer/
+        - title: Skip Lists
+          url: /data-structures/lists/skip-lists/
+    - title: Trees
+      url: /data-structures/trees/
+      children:
+        - title: Binary Tree
+          url: /data-structures/trees/binary-tree/
+        - title: Binary Search Tree
+          url: /data-structures/trees/binary-search-tree/
+          children:
+            - title: Red-Black Tree
+              url: /data-structures/trees/red-black-tree/
+            - title: K-D Tree
+              url: /data-structures/trees/k-d-tree/
+            - title: AVL Tree
+              url: /data-structures/trees/avl-tree/
+        - title: Heaps
+          url: /data-structures/trees/heaps/
+    - title: Graphs
+      url: /data-structures/graphs/
+- title: Algorithms
+  url: /algorithms/
+  summary: Time-space tradeoffs, walkthroughs, and complete language implementations.
+  children:
+    - title: String Based
+      url: /algorithms/string-based/
+      children:
+        - title: Distance (Hamming, Levenshtein)
+          url: /algorithms/string-based/distance-metrics/
+        - title: Knuth-Morris-Pratt (KMP)
+          url: /algorithms/string-based/kmp/
+        - title: Rabin-Karp
+          url: /algorithms/string-based/rabin-karp/
+    - title: Lists
+      url: /algorithms/lists/
+      children:
+        - title: Two Pointers
+          url: /algorithms/lists/two-pointers/
+        - title: Sliding Window
+          url: /algorithms/lists/sliding-window/
+    - title: Graph
+      url: /algorithms/graph/
+      children:
+        - title: Traversals (BFS, DFS)
+          url: /algorithms/graph/traversals-bfs-dfs/
+        - title: Dijkstra
+          url: /algorithms/graph/dijkstra/
+        - title: Topological Sort
+          url: /algorithms/graph/topological-sort/
+    - title: Tree
+      url: /algorithms/tree/
+      children:
+        - title: Traversals (Pre/In/Post)
+          url: /algorithms/tree/traversals/
+        - title: Lowest Common Ancestor
+          url: /algorithms/tree/lowest-common-ancestor/

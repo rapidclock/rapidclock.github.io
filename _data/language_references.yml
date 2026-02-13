@@ -1,0 +1,371 @@
+"/languages/basic-syntax-cheatsheet/":
+  description: "Primary language and standard-library references for the syntax concepts on this page."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "Python Tutorial"
+          url: "https://docs.python.org/3/tutorial/"
+        - title: "Built-in Types"
+          url: "https://docs.python.org/3/library/stdtypes.html"
+        - title: "Built-in Functions"
+          url: "https://docs.python.org/3/library/functions.html"
+        - title: "Typing"
+          url: "https://docs.python.org/3/library/typing.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "The Rust Book"
+          url: "https://doc.rust-lang.org/book/"
+        - title: "Rust By Example"
+          url: "https://doc.rust-lang.org/rust-by-example/"
+        - title: "std crate"
+          url: "https://doc.rust-lang.org/std/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "A Tour of Go"
+          url: "https://go.dev/tour/"
+        - title: "Language Spec"
+          url: "https://go.dev/ref/spec"
+        - title: "Effective Go"
+          url: "https://go.dev/doc/effective_go"
+
+"/languages/arrays/":
+  description: "Official docs for dynamic array/list primitives used in Python, Rust, and Go."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "list type"
+          url: "https://docs.python.org/3/library/stdtypes.html#list"
+        - title: "list methods"
+          url: "https://docs.python.org/3/tutorial/datastructures.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "Vec<T>"
+          url: "https://doc.rust-lang.org/std/vec/struct.Vec.html"
+        - title: "slice primitives"
+          url: "https://doc.rust-lang.org/std/primitive.slice.html"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "Slices: usage and internals"
+          url: "https://go.dev/blog/slices-intro"
+        - title: "slices package"
+          url: "https://pkg.go.dev/slices"
+
+"/languages/dictionaries/":
+  description: "Official map/hash table references for key-value operations and iteration guarantees."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "dict type"
+          url: "https://docs.python.org/3/library/stdtypes.html#dict"
+        - title: "collections module"
+          url: "https://docs.python.org/3/library/collections.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "HashMap"
+          url: "https://doc.rust-lang.org/std/collections/struct.HashMap.html"
+        - title: "BTreeMap"
+          url: "https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "Map types (language spec)"
+          url: "https://go.dev/ref/spec#Map_types"
+        - title: "maps package"
+          url: "https://pkg.go.dev/maps"
+
+"/languages/sets/":
+  description: "Official set-related references (native set in Python, set-like patterns in Rust/Go)."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "set and frozenset"
+          url: "https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "HashSet"
+          url: "https://doc.rust-lang.org/std/collections/struct.HashSet.html"
+        - title: "BTreeSet"
+          url: "https://doc.rust-lang.org/std/collections/struct.BTreeSet.html"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "Map types (set via map[T]struct{})"
+          url: "https://go.dev/ref/spec#Map_types"
+
+"/languages/file-io/":
+  description: "Canonical docs for text/binary file I/O APIs and path handling."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "open()"
+          url: "https://docs.python.org/3/library/functions.html#open"
+        - title: "io module"
+          url: "https://docs.python.org/3/library/io.html"
+        - title: "pathlib"
+          url: "https://docs.python.org/3/library/pathlib.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "std::fs"
+          url: "https://doc.rust-lang.org/std/fs/"
+        - title: "std::io"
+          url: "https://doc.rust-lang.org/std/io/"
+        - title: "std::path"
+          url: "https://doc.rust-lang.org/std/path/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "os package"
+          url: "https://pkg.go.dev/os"
+        - title: "io package"
+          url: "https://pkg.go.dev/io"
+        - title: "bufio package"
+          url: "https://pkg.go.dev/bufio"
+        - title: "path/filepath"
+          url: "https://pkg.go.dev/path/filepath"
+
+"/languages/tcp-streams/":
+  description: "Primary networking references for TCP clients/servers and stream behavior."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "socket"
+          url: "https://docs.python.org/3/library/socket.html"
+        - title: "socketserver"
+          url: "https://docs.python.org/3/library/socketserver.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "std::net"
+          url: "https://doc.rust-lang.org/std/net/"
+        - title: "TcpStream"
+          url: "https://doc.rust-lang.org/std/net/struct.TcpStream.html"
+        - title: "TcpListener"
+          url: "https://doc.rust-lang.org/std/net/struct.TcpListener.html"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "net package"
+          url: "https://pkg.go.dev/net"
+        - title: "TCPConn"
+          url: "https://pkg.go.dev/net#TCPConn"
+    - label: "External (When Needed)"
+      kind: external
+      links:
+        - title: "rustls (Rust TLS)"
+          url: "https://github.com/rustls/rustls"
+        - title: "native-tls (Rust TLS)"
+          url: "https://github.com/sfackler/rust-native-tls"
+
+"/languages/http-client/":
+  description: "Standard-library HTTP clients and recommended ecosystem clients with official docs."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "urllib.request"
+          url: "https://docs.python.org/3/library/urllib.request.html"
+        - title: "http.client"
+          url: "https://docs.python.org/3/library/http.client.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "std::net (raw HTTP over TCP)"
+          url: "https://doc.rust-lang.org/std/net/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "net/http"
+          url: "https://pkg.go.dev/net/http"
+        - title: "http.Client"
+          url: "https://pkg.go.dev/net/http#Client"
+    - label: "External (Recommended)"
+      kind: external
+      links:
+        - title: "httpx docs"
+          url: "https://www.python-httpx.org/"
+        - title: "httpx GitHub"
+          url: "https://github.com/encode/httpx"
+        - title: "reqwest docs"
+          url: "https://docs.rs/reqwest/latest/reqwest/"
+        - title: "reqwest GitHub"
+          url: "https://github.com/seanmonstar/reqwest"
+
+"/languages/general/detailed-concurrency/":
+  description: "Concurrency primitives and runtime references for all three languages."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "threading"
+          url: "https://docs.python.org/3/library/threading.html"
+        - title: "asyncio"
+          url: "https://docs.python.org/3/library/asyncio.html"
+        - title: "queue"
+          url: "https://docs.python.org/3/library/queue.html"
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "std::thread"
+          url: "https://doc.rust-lang.org/std/thread/"
+        - title: "std::sync"
+          url: "https://doc.rust-lang.org/std/sync/"
+        - title: "std::sync::mpsc"
+          url: "https://doc.rust-lang.org/std/sync/mpsc/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "sync"
+          url: "https://pkg.go.dev/sync"
+        - title: "sync/atomic"
+          url: "https://pkg.go.dev/sync/atomic"
+        - title: "context"
+          url: "https://pkg.go.dev/context"
+    - label: "External (Recommended)"
+      kind: external
+      links:
+        - title: "Tokio docs"
+          url: "https://docs.rs/tokio/latest/tokio/"
+        - title: "Tokio project"
+          url: "https://tokio.rs/"
+        - title: "crossbeam docs"
+          url: "https://docs.rs/crossbeam/latest/crossbeam/"
+        - title: "crossbeam GitHub"
+          url: "https://github.com/crossbeam-rs/crossbeam"
+
+"/languages/language-features/python/":
+  description: "Authoritative references for Python language features and core runtime protocols."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "Language Reference"
+          url: "https://docs.python.org/3/reference/"
+        - title: "Data Model"
+          url: "https://docs.python.org/3/reference/datamodel.html"
+        - title: "typing"
+          url: "https://docs.python.org/3/library/typing.html"
+        - title: "dataclasses"
+          url: "https://docs.python.org/3/library/dataclasses.html"
+        - title: "contextlib"
+          url: "https://docs.python.org/3/library/contextlib.html"
+        - title: "asyncio"
+          url: "https://docs.python.org/3/library/asyncio.html"
+
+"/languages/language-features/rust/":
+  description: "Core Rust references for ownership, traits, enums, error handling, async, and unsafe."
+  groups:
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "The Rust Programming Language"
+          url: "https://doc.rust-lang.org/book/"
+        - title: "Ownership chapter"
+          url: "https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html"
+        - title: "Enums and pattern matching"
+          url: "https://doc.rust-lang.org/book/ch06-00-enums.html"
+        - title: "Traits and generics"
+          url: "https://doc.rust-lang.org/book/ch10-00-generics.html"
+        - title: "Error handling"
+          url: "https://doc.rust-lang.org/book/ch09-00-error-handling.html"
+        - title: "Rust std docs"
+          url: "https://doc.rust-lang.org/std/"
+    - label: "External (Recommended)"
+      kind: external
+      links:
+        - title: "Tokio docs"
+          url: "https://docs.rs/tokio/latest/tokio/"
+        - title: "Async Book"
+          url: "https://rust-lang.github.io/async-book/"
+
+"/languages/language-features/go/":
+  description: "Language-level and stdlib references for Go interfaces, slices, errors, concurrency, and tooling."
+  groups:
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "Language Spec"
+          url: "https://go.dev/ref/spec"
+        - title: "Effective Go"
+          url: "https://go.dev/doc/effective_go"
+        - title: "Go by Example"
+          url: "https://gobyexample.com/"
+        - title: "context"
+          url: "https://pkg.go.dev/context"
+        - title: "sync"
+          url: "https://pkg.go.dev/sync"
+        - title: "errors"
+          url: "https://pkg.go.dev/errors"
+
+"/languages/language-specifics/python-patterns/":
+  description: "Python references aligned to the specific patterns discussed on this page."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "Exceptions"
+          url: "https://docs.python.org/3/tutorial/errors.html"
+        - title: "dataclasses"
+          url: "https://docs.python.org/3/library/dataclasses.html"
+        - title: "itertools"
+          url: "https://docs.python.org/3/library/itertools.html"
+        - title: "contextlib"
+          url: "https://docs.python.org/3/library/contextlib.html"
+        - title: "functools"
+          url: "https://docs.python.org/3/library/functools.html"
+        - title: "typing.Protocol"
+          url: "https://docs.python.org/3/library/typing.html#typing.Protocol"
+        - title: "concurrent.futures"
+          url: "https://docs.python.org/3/library/concurrent.futures.html"
+
+"/languages/language-specifics/rust-patterns/":
+  description: "Rust references aligned to pattern-level design and ownership-based idioms."
+  groups:
+    - label: "Rust (Official)"
+      kind: stdlib
+      links:
+        - title: "Structs and methods"
+          url: "https://doc.rust-lang.org/book/ch05-00-structs.html"
+        - title: "Enums and pattern matching"
+          url: "https://doc.rust-lang.org/book/ch06-00-enums.html"
+        - title: "Error handling"
+          url: "https://doc.rust-lang.org/book/ch09-00-error-handling.html"
+        - title: "Generics and traits"
+          url: "https://doc.rust-lang.org/book/ch10-00-generics.html"
+        - title: "Rc and Arc"
+          url: "https://doc.rust-lang.org/std/rc/"
+        - title: "std::sync"
+          url: "https://doc.rust-lang.org/std/sync/"
+        - title: "std::iter"
+          url: "https://doc.rust-lang.org/std/iter/"
+
+"/languages/language-specifics/go-patterns/":
+  description: "Go references aligned to production patterns for APIs, concurrency, errors, and testing."
+  groups:
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "context"
+          url: "https://pkg.go.dev/context"
+        - title: "errors"
+          url: "https://pkg.go.dev/errors"
+        - title: "fmt"
+          url: "https://pkg.go.dev/fmt"
+        - title: "sync"
+          url: "https://pkg.go.dev/sync"
+        - title: "testing"
+          url: "https://pkg.go.dev/testing"
+        - title: "Go Code Review Comments"
+          url: "https://go.dev/wiki/CodeReviewComments"

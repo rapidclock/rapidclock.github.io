@@ -1,0 +1,33 @@
+{% assign has_children = false %}
+{% if include.item.children and include.item.children.size > 0 %}
+  {% assign has_children = true %}
+{% endif %}
+{% assign is_active = false %}
+{% if include.current_url == include.item.url %}
+  {% assign is_active = true %}
+{% endif %}
+{% assign is_open = false %}
+{% if has_children %}
+  {% if include.item.url == '/' %}
+    {% assign is_open = true %}
+  {% elsif include.current_url contains include.item.url %}
+    {% assign is_open = true %}
+  {% endif %}
+{% endif %}
+<li class="nav-item{% if is_active %} is-active{% endif %}">
+  <div class="nav-row">
+    {% if has_children %}
+      <button class="nav-toggle" aria-expanded="{% if is_open %}true{% else %}false{% endif %}" aria-label="Toggle {{ include.item.title }} section" type="button"></button>
+    {% else %}
+      <span class="nav-spacer" aria-hidden="true"></span>
+    {% endif %}
+    <a href="{{ include.item.url | relative_url }}" class="nav-link{% if is_active %} is-active{% endif %}">{{ include.item.title }}</a>
+  </div>
+  {% if has_children %}
+    <ul class="nav-children{% unless is_open %} is-collapsed{% endunless %}">
+      {% for child in include.item.children %}
+        {% include nav-node.html item=child current_url=include.current_url %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>
