@@ -65,6 +65,35 @@ while heap not empty:
 5. Zero-weight edges:
    Fully valid; algorithm still works but may create many equal-priority heap entries.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Edge Relaxation</p>
+  <div class="op-step">1. Pop node u with current minimum tentative distance.</div>
+  <div class="op-step">2. Inspect outgoing edge (u, v, w).</div>
+  <div class="op-step">3. Compute candidate distance dist[u] + w.</div>
+  <div class="op-step">4. If candidate improves dist[v], update dist[v].</div>
+  <div class="op-step">5. Push updated (dist[v], v) into priority queue.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: One Complete Dijkstra Run</p>
+  <div class="op-step">1. Initialize all distances to inf except source=0.</div>
+  <div class="op-step">2. Repeatedly pop closest unsettled node from heap.</div>
+  <div class="op-step">3. Relax all outgoing edges from that node.</div>
+  <div class="op-step">4. Skip stale heap entries using dist guard.</div>
+  <div class="op-step">5. Terminate when heap empties; distances are final.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Negative Edge Failure</p>
+  <div class="op-step">1. Graph contains an edge with negative weight.</div>
+  <div class="op-step">2. Node popped as minimum may later receive shorter path.</div>
+  <div class="op-step">3. Finalization invariant breaks.</div>
+  <div class="op-step">4. Output becomes incorrect for shortest paths.</div>
+  <div class="op-step">5. Switch to Bellman-Ford for negative-weight graphs.</div>
+</div>
+
 ## Full Examples
 
 <div class="code-tabs">

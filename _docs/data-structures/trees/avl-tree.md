@@ -112,6 +112,24 @@ This combination gives predictable `O(log n)` height.
   <div class="op-step">5. Heights recomputed, subtree balance restored.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: AVL Update Pipeline</p>
+  <div class="op-step">1. Perform BST insert or delete at leaf-side position.</div>
+  <div class="op-step">2. Recompute heights while unwinding recursion.</div>
+  <div class="op-step">3. Detect imbalance using balance factors.</div>
+  <div class="op-step">4. Apply LL/LR/RR/RL rotation sequence as needed.</div>
+  <div class="op-step">5. Return balanced subtree with updated heights.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Double Rotation (LR)</p>
+  <div class="op-step">1. Insert causes left-heavy parent but right-heavy left child.</div>
+  <div class="op-step">2. Single right rotation would fail to restore order.</div>
+  <div class="op-step">3. First rotate left on left child.</div>
+  <div class="op-step">4. Then rotate right on imbalanced parent.</div>
+  <div class="op-step">5. Subtree becomes both ordered and balanced.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

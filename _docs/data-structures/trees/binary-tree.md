@@ -102,6 +102,24 @@ Without additional ordering invariants (like BST), traversal must potentially in
   <div class="op-step">5. Stop when queue becomes empty.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Build + Traverse + Search</p>
+  <div class="op-step">1. Insert nodes to form target binary-tree shape.</div>
+  <div class="op-step">2. Run DFS traversal to collect structural order.</div>
+  <div class="op-step">3. Run BFS traversal to collect level order.</div>
+  <div class="op-step">4. Perform value search by exploring both subtrees as needed.</div>
+  <div class="op-step">5. Return traversal output and search result.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Skewed Tree Recursion Risk</p>
+  <div class="op-step">1. Inserts create one-sided chain (height n).</div>
+  <div class="op-step">2. Recursive DFS depth grows linearly.</div>
+  <div class="op-step">3. Call stack pressure increases on deep inputs.</div>
+  <div class="op-step">4. Switch to iterative stack traversal.</div>
+  <div class="op-step">5. Preserve correctness while avoiding stack overflow.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

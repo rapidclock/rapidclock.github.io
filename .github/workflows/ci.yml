@@ -27,6 +27,9 @@ jobs:
             --exclude-file .lycheeignore
             "**/*.md"
 
+      - name: Validate curriculum quality gates
+        run: python3 scripts/validate_curriculum.py
+
   jekyll-build:
     runs-on: ubuntu-latest
     steps:
@@ -35,5 +38,7 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler-cache: true
+      - name: Validate frontend JavaScript syntax
+        run: node --check assets/js/app.js
       - name: Build site
         run: bundle exec jekyll build

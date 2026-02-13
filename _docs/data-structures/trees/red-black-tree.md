@@ -111,6 +111,24 @@ Together, they preserve both order and near-balanced height.
   <div class="op-step">5. Recolor root black to finalize invariants.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Ordered Map Operation Cycle</p>
+  <div class="op-step">1. Insert key using BST comparison path.</div>
+  <div class="op-step">2. Apply local rotations and color flips.</div>
+  <div class="op-step">3. Search queries follow logarithmic-height path.</div>
+  <div class="op-step">4. Delete performs structured fix-ups to preserve black height.</div>
+  <div class="op-step">5. Tree remains balanced for future operations.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Black-Height Violation on Delete</p>
+  <div class="op-step">1. Delete black node from one branch.</div>
+  <div class="op-step">2. Path loses one black count compared to sibling path.</div>
+  <div class="op-step">3. Apply recolor/rotation fix-up while moving imbalance upward.</div>
+  <div class="op-step">4. Resolve at ancestor or root.</div>
+  <div class="op-step">5. All root-to-leaf paths regain equal black height.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

@@ -118,6 +118,35 @@ function delete(node):
         node.next.prev = node.prev
 ```
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Delete Middle Node</p>
+  <div class="op-step">1. Locate target node in chain.</div>
+  <div class="op-step">2. Rewire prev.next to skip target.</div>
+  <div class="op-step">3. Rewire next.prev to skip target.</div>
+  <div class="op-step">4. Target node becomes detached.</div>
+  <div class="op-step">5. Head/tail remain unchanged for middle delete.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Push Back + Delete + Traverse</p>
+  <div class="op-step">1. Append values to tail while maintaining prev links.</div>
+  <div class="op-step">2. Delete selected key by local pointer rewiring.</div>
+  <div class="op-step">3. Walk forward from head to validate order.</div>
+  <div class="op-step">4. Walk backward from tail to validate reverse links.</div>
+  <div class="op-step">5. Confirm both directions are consistent.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Deleting the Only Node</p>
+  <div class="op-step">1. List has one node where head == tail.</div>
+  <div class="op-step">2. Delete operation removes that node.</div>
+  <div class="op-step">3. Head must be set to None.</div>
+  <div class="op-step">4. Tail must also be set to None.</div>
+  <div class="op-step">5. Future inserts should treat list as empty state.</div>
+</div>
+
 ## Full Examples
 
 <div class="code-tabs">

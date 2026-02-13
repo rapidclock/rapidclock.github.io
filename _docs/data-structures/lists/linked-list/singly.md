@@ -142,6 +142,35 @@ function push_front(head, value):
     return new_node
 ```
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Push Front Pointer Rewrite</p>
+  <div class="op-step">1. Allocate new node with value.</div>
+  <div class="op-step">2. Copy old head reference into new_node.next.</div>
+  <div class="op-step">3. Move head to new node.</div>
+  <div class="op-step">4. Verify chain still ends at None.</div>
+  <div class="op-step">5. Operation completes in O(1).</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Build + Search Flow</p>
+  <div class="op-step">1. Start with empty head.</div>
+  <div class="op-step">2. Push front values and append tail values.</div>
+  <div class="op-step">3. Traverse node-by-node for target lookup.</div>
+  <div class="op-step">4. Stop on first match or list end.</div>
+  <div class="op-step">5. Return found/not-found result.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Accidental Cycle Bug</p>
+  <div class="op-step">1. Buggy code points tail.next back to a previous node.</div>
+  <div class="op-step">2. Traversal enters loop and never reaches None.</div>
+  <div class="op-step">3. CPU time grows while output repeats nodes.</div>
+  <div class="op-step">4. Add visited guard or cycle detection in debug checks.</div>
+  <div class="op-step">5. Fix pointer assignment to restore terminating chain.</div>
+</div>
+
 ## Full Examples
 
 <div class="code-tabs">

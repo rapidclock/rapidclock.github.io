@@ -28,6 +28,21 @@ Because the array is sorted, each move safely eliminates impossible candidates.
 | Time | O(n) |
 | Extra space | O(1) |
 
+## Illustration
+
+```mermaid
+flowchart TD
+  A["left=0, right=n-1"] --> B{"left < right?"}
+  B -- No --> F["No pair found"]
+  B -- Yes --> C["s = nums[left] + nums[right]"]
+  C --> D{"s vs target"}
+  D -- "sum equals target" --> G["Return (left, right)"]
+  D -- "sum too small" --> E["left++"]
+  D -- "sum too large" --> H["right--"]
+  E --> B
+  H --> B
+```
+
 ## Pseudocode
 
 ```text
@@ -52,6 +67,35 @@ return not found
    Should return not found immediately.
 5. Integer overflow in fixed-width languages:
    Sum `nums[left] + nums[right]` can overflow; use wider type/check when values can be large.
+
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Pointer Move Rule</p>
+  <div class="op-step">1. Compare sum of left and right values to target.</div>
+  <div class="op-step">2. If sum too small, move left rightward.</div>
+  <div class="op-step">3. If sum too large, move right leftward.</div>
+  <div class="op-step">4. Recompute sum at new pair.</div>
+  <div class="op-step">5. Repeat until found or pointers cross.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: End-to-End Pair Search</p>
+  <div class="op-step">1. Initialize pointers at array extremes.</div>
+  <div class="op-step">2. Eliminate impossible ranges using sorted-order logic.</div>
+  <div class="op-step">3. Continue narrowing search interval.</div>
+  <div class="op-step">4. Return matching indices when target met.</div>
+  <div class="op-step">5. If pointers cross, report no valid pair.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Input Not Sorted</p>
+  <div class="op-step">1. Algorithm assumes sorted order for safe elimination.</div>
+  <div class="op-step">2. Unsorted input breaks elimination invariant.</div>
+  <div class="op-step">3. Pointer moves skip potentially valid pairs.</div>
+  <div class="op-step">4. Result may be false negative.</div>
+  <div class="op-step">5. Sort first or use hash-based two-sum approach.</div>
+</div>
 
 ## Full Examples
 

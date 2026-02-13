@@ -73,6 +73,35 @@ return order
 5. Self-loop:
    A self-loop is a cycle of length 1, so topological sort must fail.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: In-Degree Drain Step</p>
+  <div class="op-step">1. Pop zero in-degree node u from queue.</div>
+  <div class="op-step">2. Append u to topological output.</div>
+  <div class="op-step">3. Decrement in-degree of each neighbor v.</div>
+  <div class="op-step">4. Push v when in-degree becomes zero.</div>
+  <div class="op-step">5. Continue with next queue node.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Kahn End-to-End</p>
+  <div class="op-step">1. Build indegree counts for all vertices.</div>
+  <div class="op-step">2. Seed queue with all zero-indegree nodes.</div>
+  <div class="op-step">3. Repeatedly pop and release outgoing constraints.</div>
+  <div class="op-step">4. Grow output order incrementally.</div>
+  <div class="op-step">5. Validate output size to detect cycle or success.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Cycle Detection</p>
+  <div class="op-step">1. Queue becomes empty before all nodes are output.</div>
+  <div class="op-step">2. Remaining nodes still have positive indegree.</div>
+  <div class="op-step">3. Those nodes are mutually constrained in cycle.</div>
+  <div class="op-step">4. Algorithm reports cycle error instead of order.</div>
+  <div class="op-step">5. Caller can surface invalid dependency graph.</div>
+</div>
+
 ## Full Examples (Kahn's Algorithm)
 
 <div class="code-tabs">

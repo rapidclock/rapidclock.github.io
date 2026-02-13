@@ -103,6 +103,35 @@ Capacity `4`, push values `10, 20, 30, 40, 50`:
 5. Concurrent access:
    Multi-producer/multi-consumer use requires synchronization or lock-free protocol.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Wrap-Around Write</p>
+  <div class="op-step">1. Tail reaches physical end of backing array.</div>
+  <div class="op-step">2. Next write index wraps with modulo to slot 0.</div>
+  <div class="op-step">3. New item is written at wrapped index.</div>
+  <div class="op-step">4. Logical order is still tracked by head/size.</div>
+  <div class="op-step">5. No data shifting occurs.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Continuous Stream Cycle</p>
+  <div class="op-step">1. Producer pushes values until buffer fills.</div>
+  <div class="op-step">2. Consumer reads oldest logical values.</div>
+  <div class="op-step">3. New pushes keep overwriting oldest when full.</div>
+  <div class="op-step">4. Head advances to preserve FIFO window.</div>
+  <div class="op-step">5. System runs in fixed memory with O(1) operations.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Full Buffer Policy</p>
+  <div class="op-step">1. Buffer reaches capacity and receives another push.</div>
+  <div class="op-step">2. Overwrite policy: oldest item is dropped, head advances.</div>
+  <div class="op-step">3. Reject policy: write is denied and state unchanged.</div>
+  <div class="op-step">4. Downstream behavior depends on chosen policy.</div>
+  <div class="op-step">5. Document policy to prevent data-loss surprises.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

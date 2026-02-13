@@ -116,6 +116,35 @@ Order: `A, B, C, D, E`.
 5. Directed vs undirected mismatch:
    Treating a directed graph as undirected (or vice versa) changes correctness of reachability and path algorithms.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: BFS Queue Expansion</p>
+  <div class="op-step">1. Initialize queue with start node A.</div>
+  <div class="op-step">2. Dequeue A and enqueue unvisited neighbors B, C.</div>
+  <div class="op-step">3. Dequeue B, enqueue D if unseen.</div>
+  <div class="op-step">4. Dequeue C, skip D if already discovered.</div>
+  <div class="op-step">5. Continue until queue empties and all reachable nodes are visited.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Graph Pipeline</p>
+  <div class="op-step">1. Build adjacency representation from input edges.</div>
+  <div class="op-step">2. Initialize visited state and traversal worklist.</div>
+  <div class="op-step">3. Repeatedly process nodes and expose new neighbors.</div>
+  <div class="op-step">4. Apply algorithm logic (BFS/DFS/shortest path/topological constraints).</div>
+  <div class="op-step">5. Emit final traversal order or computed graph result.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Disconnected Components</p>
+  <div class="op-step">1. Traversal starts from one component only.</div>
+  <div class="op-step">2. Queue/stack empties before all nodes are seen.</div>
+  <div class="op-step">3. Remaining nodes are in other disconnected components.</div>
+  <div class="op-step">4. Outer loop picks new unvisited start node.</div>
+  <div class="op-step">5. Combined runs cover full graph.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

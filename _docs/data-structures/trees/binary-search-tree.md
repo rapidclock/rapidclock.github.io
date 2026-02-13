@@ -111,6 +111,24 @@ Balanced shape is essential. If keys arrive in sorted order without rebalancing,
   <div class="op-step">5. Stop without exploring unrelated branches.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Insert + Search + Delete</p>
+  <div class="op-step">1. Insert key by descending left/right with BST ordering rule.</div>
+  <div class="op-step">2. Search uses same comparison path to target.</div>
+  <div class="op-step">3. Delete leaf node directly.</div>
+  <div class="op-step">4. Delete one-child node by bypassing it.</div>
+  <div class="op-step">5. Delete two-child node via inorder successor swap and remove.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Sorted Inserts Degrade Height</p>
+  <div class="op-step">1. Insert keys in sorted order.</div>
+  <div class="op-step">2. Tree becomes skewed instead of balanced.</div>
+  <div class="op-step">3. Search path length grows toward n.</div>
+  <div class="op-step">4. Insert/delete also degrade to linear behavior.</div>
+  <div class="op-step">5. Use AVL/Red-Black variant when balance is required.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

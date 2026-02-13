@@ -28,6 +28,19 @@ At node `x`:
 
 For balanced BST, `h = O(log n)`; for skewed BST, `h = O(n)`.
 
+## Illustration
+
+```mermaid
+flowchart TD
+  A["Start at root"] --> B{"both keys less than node?"}
+  B -- Yes --> C["Move left"]
+  B -- No --> D{"both keys greater than node?"}
+  D -- Yes --> E["Move right"]
+  D -- No --> F["Split point found: node is LCA"]
+  C --> B
+  E --> B
+```
+
 ## Edge Cases
 
 1. One node is ancestor of the other:
@@ -40,6 +53,35 @@ For balanced BST, `h = O(log n)`; for skewed BST, `h = O(n)`.
    Runtime can degrade to O(n), matching linked-list-like height.
 5. Root as LCA:
    Very common when keys fall into different root subtrees; this is expected behavior, not a special error path.
+
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: BST Split-Point Rule</p>
+  <div class="op-step">1. Compare p and q against current node key.</div>
+  <div class="op-step">2. If both smaller, move left.</div>
+  <div class="op-step">3. If both larger, move right.</div>
+  <div class="op-step">4. Otherwise current node is split point.</div>
+  <div class="op-step">5. Return current node as LCA.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: LCA Query Run</p>
+  <div class="op-step">1. Start at BST root.</div>
+  <div class="op-step">2. Descend using dual-side comparisons for p and q.</div>
+  <div class="op-step">3. Narrow search to one subtree when both on same side.</div>
+  <div class="op-step">4. Stop at first divergence or ancestor equality.</div>
+  <div class="op-step">5. Return LCA node key.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Missing Key Validation</p>
+  <div class="op-step">1. Traversal finds split point for p and q values.</div>
+  <div class="op-step">2. But one key is not actually present in tree.</div>
+  <div class="op-step">3. Naive shortcut returns misleading LCA.</div>
+  <div class="op-step">4. Optional pre-check verifies both keys exist.</div>
+  <div class="op-step">5. API returns explicit not-found when needed.</div>
+</div>
 
 ## Pseudocode
 

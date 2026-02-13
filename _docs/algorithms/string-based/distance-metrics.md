@@ -74,6 +74,35 @@ return dp[m][n]
 5. Domain-specific costs:
    Standard Levenshtein treats all edits as cost `1`; if substitutions/insertions have different costs, transition rules must change.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Hamming Position Check</p>
+  <div class="op-step">1. Align two equal-length strings by index.</div>
+  <div class="op-step">2. Compare characters at current position.</div>
+  <div class="op-step">3. Increment mismatch count if different.</div>
+  <div class="op-step">4. Advance to next index.</div>
+  <div class="op-step">5. Final mismatch count is Hamming distance.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Levenshtein DP Fill</p>
+  <div class="op-step">1. Initialize first row/column with edit counts.</div>
+  <div class="op-step">2. Visit dp cell row-by-row.</div>
+  <div class="op-step">3. Compute min(delete, insert, substitute/match).</div>
+  <div class="op-step">4. Store result and continue to next cell.</div>
+  <div class="op-step">5. Read final distance from dp[m][n].</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Unequal Length Hamming Input</p>
+  <div class="op-step">1. Input strings arrive with different lengths.</div>
+  <div class="op-step">2. Position-by-position comparison is undefined.</div>
+  <div class="op-step">3. Guard condition detects mismatch in length.</div>
+  <div class="op-step">4. Function returns explicit error.</div>
+  <div class="op-step">5. Caller switches to Levenshtein when lengths differ.</div>
+</div>
+
 ## Full Examples
 
 <div class="code-tabs">

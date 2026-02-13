@@ -110,6 +110,24 @@ As a result, heaps are ideal for repeatedly extracting highest priority items.
   <div class="op-step">5. Heap property restored globally.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Priority Queue Cycle</p>
+  <div class="op-step">1. Build heap from batch input in O(n).</div>
+  <div class="op-step">2. Push new tasks/items by bubble-up.</div>
+  <div class="op-step">3. Pop highest-priority root repeatedly.</div>
+  <div class="op-step">4. Bubble-down re-establishes property after each pop.</div>
+  <div class="op-step">5. Processed output follows heap priority order.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Equal Priority Tie Handling</p>
+  <div class="op-step">1. Multiple items share same priority key.</div>
+  <div class="op-step">2. Heap may return equal-priority items in non-stable order.</div>
+  <div class="op-step">3. Add monotonic sequence number as secondary key.</div>
+  <div class="op-step">4. Comparator uses (priority, seq) tuple.</div>
+  <div class="op-step">5. Queue behavior becomes stable and predictable.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

@@ -37,6 +37,35 @@ For adjacency list with `V` vertices and `E` edges:
 5. Missing adjacency entries:
    If a node appears only as a neighbor and not as a key, traversal code should handle default empty neighbors.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: BFS Layer Expansion</p>
+  <div class="op-step">1. Queue begins with start node.</div>
+  <div class="op-step">2. Pop front node and mark it visited in order.</div>
+  <div class="op-step">3. Enqueue unseen neighbors.</div>
+  <div class="op-step">4. Repeat queue pop/push per frontier layer.</div>
+  <div class="op-step">5. Finish when queue is empty.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: DFS Backtracking</p>
+  <div class="op-step">1. Descend along first unvisited neighbor path.</div>
+  <div class="op-step">2. Continue until dead end reached.</div>
+  <div class="op-step">3. Backtrack to most recent node with choices.</div>
+  <div class="op-step">4. Explore next unvisited branch.</div>
+  <div class="op-step">5. End when all reachable nodes visited.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Missing Visited Guard</p>
+  <div class="op-step">1. Traversal enters a cycle edge.</div>
+  <div class="op-step">2. Without visited tracking, node is re-enqueued/recalled.</div>
+  <div class="op-step">3. Loop repeats indefinitely.</div>
+  <div class="op-step">4. Add visited set check before pushing/recursing.</div>
+  <div class="op-step">5. Traversal terminates with each node processed once.</div>
+</div>
+
 ## Illustration
 
 ```mermaid

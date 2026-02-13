@@ -24,6 +24,22 @@ Rabin-Karp compares hash values of the pattern and each text window.
 
 Different strings can share a hash. Always verify the substring when hashes match.
 
+## Illustration
+
+```mermaid
+flowchart TD
+  A["Hash pattern + first text window"] --> B{"Window hash == pattern hash?"}
+  B -- Yes --> C["Verify exact substring chars"]
+  B -- No --> D["Roll hash to next window"]
+  C --> E{"Exact match?"}
+  E -- Yes --> F["Record match index"]
+  E -- No --> D
+  F --> D
+  D --> G{"Last window reached?"}
+  G -- No --> B
+  G -- Yes --> H["Done"]
+```
+
 ## Pseudocode
 
 ```text
@@ -46,6 +62,35 @@ for each window i:
    Languages with signed modulo semantics need normalization (`+mod` or `rem_euclid`) after subtraction.
 5. Poor hash parameters:
    Weak base/mod choices increase collision probability and degrade toward worst-case behavior.
+
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Rolling Hash Update</p>
+  <div class="op-step">1. Remove outgoing character contribution.</div>
+  <div class="op-step">2. Normalize value into non-negative modulo range.</div>
+  <div class="op-step">3. Multiply by base to shift window.</div>
+  <div class="op-step">4. Add incoming character contribution.</div>
+  <div class="op-step">5. New window hash ready in O(1).</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Hash Scan + Verify</p>
+  <div class="op-step">1. Compute pattern hash and first text-window hash.</div>
+  <div class="op-step">2. Compare hashes at each shift.</div>
+  <div class="op-step">3. On hash match, verify substring character-by-character.</div>
+  <div class="op-step">4. Record exact matches and continue rolling.</div>
+  <div class="op-step">5. Finish after last window position.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Hash Collision</p>
+  <div class="op-step">1. Different substrings produce same hash value.</div>
+  <div class="op-step">2. Hash test alone incorrectly suggests match.</div>
+  <div class="op-step">3. Exact substring verification runs immediately.</div>
+  <div class="op-step">4. Verification fails, so match is discarded.</div>
+  <div class="op-step">5. Algorithm remains correct despite collision.</div>
+</div>
 
 ## Full Examples
 

@@ -44,6 +44,35 @@ These differ only in when you visit the current node relative to its children.
 6. Concurrent mutation during traversal:
    Updating tree pointers while traversing can invalidate assumptions and produce undefined behavior.
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Recursive Inorder Visit</p>
+  <div class="op-step">1. Descend left until null.</div>
+  <div class="op-step">2. Visit current node on unwind.</div>
+  <div class="op-step">3. Descend into right subtree.</div>
+  <div class="op-step">4. Repeat same left-node-right rule recursively.</div>
+  <div class="op-step">5. Finish with nodes in inorder sequence.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Compare Recursive, Iterative, Morris</p>
+  <div class="op-step">1. Recursive traversal uses call stack depth h.</div>
+  <div class="op-step">2. Iterative traversal simulates stack explicitly.</div>
+  <div class="op-step">3. Morris traversal threads pointers to avoid extra stack.</div>
+  <div class="op-step">4. Each mode visits all n nodes exactly once.</div>
+  <div class="op-step">5. Choose mode by readability, memory limits, and mutation tolerance.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Morris Thread Restoration</p>
+  <div class="op-step">1. Morris creates temporary predecessor.right thread.</div>
+  <div class="op-step">2. Traversal returns via thread instead of stack.</div>
+  <div class="op-step">3. Forgetting to clear thread leaves structural corruption.</div>
+  <div class="op-step">4. Correct logic restores predecessor.right to null.</div>
+  <div class="op-step">5. Tree shape remains unchanged after traversal.</div>
+</div>
+
 ## Illustration
 
 ```mermaid

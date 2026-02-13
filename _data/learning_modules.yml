@@ -1,0 +1,461 @@
+"/data-structures/graphs/":
+  prerequisites:
+    - "Comfort with arrays/lists and hash maps."
+    - "Understand directed vs undirected edges."
+  objectives:
+    - "Choose between adjacency list and adjacency matrix for a workload."
+    - "Trace BFS visitation order from a concrete start node."
+    - "Identify common graph modeling mistakes before coding."
+  example:
+    scenario: "BFS over a directed dependency graph"
+    input: "A->[B,C], B->[D], C->[D], D->[E], E->[]"
+    transformation: "Queue evolves: [A] -> [B,C] -> [C,D] -> [D] -> [E] -> []"
+    output: "Traversal order: [A,B,C,D,E]"
+  checks:
+    - q: "Why is adjacency list usually preferred for sparse graphs?"
+      a: "It uses O(V+E) memory, while a matrix uses O(V^2) regardless of actual edge count."
+    - q: "What bug appears if visited checks are removed in cyclic graphs?"
+      a: "Traversal can loop forever by repeatedly revisiting nodes."
+  practice:
+    - "Model a transit network and list which edges should be directed vs undirected."
+    - "Run BFS manually from two different starts and compare discovered layers."
+
+"/data-structures/lists/linked-list/singly/":
+  prerequisites:
+    - "Know pointer/reference concepts and null termination."
+    - "Understand O(1) vs O(n) complexity tradeoffs."
+  objectives:
+    - "Explain why push_front is O(1) in singly linked lists."
+    - "Trace append and find operations node by node."
+    - "Detect cycle bugs caused by incorrect next pointers."
+  example:
+    scenario: "Build and query a singly linked list"
+    input: "Operations: push_front(20), push_front(12), append(35), find(20)"
+    transformation: "List states: [] -> [20] -> [12,20] -> [12,20,35]"
+    output: "find(20) returns true"
+  checks:
+    - q: "Why is index access O(n) in a singly linked list?"
+      a: "You must follow next pointers sequentially from head; no direct address jump exists."
+    - q: "What invariant guarantees traversal eventually stops?"
+      a: "The last node's next pointer is null/None."
+  practice:
+    - "Add delete_first(value) and test head, middle, and not-found cases."
+    - "Write a function to detect if the list has a cycle (Floyd's method)."
+
+"/data-structures/lists/linked-list/doubly/":
+  prerequisites:
+    - "Understand singly linked list traversal and node updates."
+    - "Know why head/tail pointers simplify endpoint operations."
+  objectives:
+    - "Perform O(1) delete at a known node via prev/next rewiring."
+    - "Reason about head/tail updates for boundary deletions."
+    - "Validate forward and backward traversal consistency."
+  example:
+    scenario: "Delete middle value from a doubly linked list"
+    input: "Initial list: 5 <-> 11 <-> 29, delete(11)"
+    transformation: "Rewire 5.next to 29 and 29.prev to 5"
+    output: "Final list: 5 <-> 29"
+  checks:
+    - q: "Why does doubly linked list use more memory than singly?"
+      a: "Each node stores both prev and next pointers instead of just next."
+    - q: "What must happen when deleting the only node?"
+      a: "Both head and tail must be set to None/null."
+  practice:
+    - "Implement reverse traversal from tail to head and verify output."
+    - "Implement insert_after(node, value) with correct pointer updates."
+
+"/data-structures/lists/linked-list/circular-ring-buffer/":
+  prerequisites:
+    - "Know modulo arithmetic and fixed-size arrays."
+    - "Understand queue semantics (FIFO)."
+  objectives:
+    - "Trace wrap-around writes using head and size."
+    - "Differentiate overwrite-on-full vs reject-on-full policies."
+    - "Explain why operations remain O(1)."
+  example:
+    scenario: "Fixed-size ring buffer with overwrite policy"
+    input: "capacity=4, push sequence: 10,20,30,40,50"
+    transformation: "After full buffer, push(50) overwrites oldest and advances head"
+    output: "Logical values: [20,30,40,50]"
+  checks:
+    - q: "What happens if capacity is zero and you still compute modulo?"
+      a: "You trigger invalid arithmetic/division-by-zero behavior, so capacity must be guarded."
+    - q: "Why is contiguous memory useful here?"
+      a: "It is cache-friendly and avoids allocation churn during steady-state operation."
+  practice:
+    - "Implement explicit pop() and test empty/full transitions."
+    - "Add mode flag to switch between overwrite and reject policies."
+
+"/data-structures/lists/skip-lists/":
+  prerequisites:
+    - "Know sorted linked list search behavior."
+    - "Understand expected-value complexity vs worst case."
+  objectives:
+    - "Trace top-down search path through skip-list levels."
+    - "Explain update-array role in insertion and deletion."
+    - "Identify why random promotion yields expected O(log n)."
+  example:
+    scenario: "Search key 12 in a 4-level skip list"
+    input: "Keys inserted: 3,8,12,16,23"
+    transformation: "Search moves right on upper lanes, then drops levels near target"
+    output: "Key 12 found at level 0 node"
+  checks:
+    - q: "Why can skip lists still degrade to O(n)?"
+      a: "A pathological promotion pattern can produce poor level distribution."
+    - q: "What must happen after deleting the last node in top lane?"
+      a: "Current max level should shrink to the highest non-empty lane."
+  practice:
+    - "Instrument your skip list to print visited nodes per search."
+    - "Compare average search hops against a plain sorted linked list."
+
+"/data-structures/trees/binary-tree/":
+  prerequisites:
+    - "Know recursion fundamentals and stack behavior."
+    - "Understand queue-based BFS traversal."
+  objectives:
+    - "Differentiate DFS orders and BFS layer order."
+    - "Relate tree height to recursion/stack space usage."
+    - "Predict traversal output for a concrete tree."
+  example:
+    scenario: "Inorder and BFS on a 7-node binary tree"
+    input: "Root 10 with children 6/14 and leaves 4,8,12,16"
+    transformation: "Inorder explores left-root-right; BFS processes by queue layers"
+    output: "Inorder: [4,6,8,10,12,14,16], BFS: [10,6,14,4,8,12,16]"
+  checks:
+    - q: "Why can recursive traversal fail on skewed trees?"
+      a: "Depth becomes O(n), which can overflow the call stack."
+    - q: "Does a plain binary tree imply sorted order?"
+      a: "No, sorted order requires BST ordering invariants."
+  practice:
+    - "Implement iterative inorder using an explicit stack."
+    - "Write function to compute tree height and test balanced vs skewed inputs."
+
+"/data-structures/trees/binary-search-tree/":
+  prerequisites:
+    - "Understand binary tree structure and recursion."
+    - "Know comparison-based ordering rules."
+  objectives:
+    - "Apply BST invariant during search and insertion."
+    - "Trace delete cases: leaf, one-child, two-child."
+    - "Recognize when BST degrades to linked-list behavior."
+  example:
+    scenario: "Search key 18"
+    input: "BST nodes include 15(root), 21(right), 18(left child of 21)"
+    transformation: "Compare 18>15 then 18<21 then equality at 18"
+    output: "Found key in 3 comparisons"
+  checks:
+    - q: "Why is inorder traversal sorted in BST?"
+      a: "All left-subtree keys are smaller and all right-subtree keys are larger at every node."
+    - q: "What causes O(n) worst-case BST operations?"
+      a: "Highly skewed shape from ordered insertion sequences."
+  practice:
+    - "Implement delete and test all three structural cases."
+    - "Measure search depth after sorted vs random inserts."
+
+"/data-structures/trees/red-black-tree/":
+  prerequisites:
+    - "Know BST insertion/search behavior."
+    - "Understand rotations at a conceptual level."
+  objectives:
+    - "Explain red-black color invariants and why they bound height."
+    - "Trace insert fix-ups (rotation + recolor)."
+    - "Identify delete black-height repair intuition."
+  example:
+    scenario: "Insert fix-up in LLRB style"
+    input: "Insert key as red leaf into existing tree"
+    transformation: "Apply rotate-left/rotate-right/color-flip rules as local invariants trigger"
+    output: "Balanced tree with black root and no red-red violations"
+  checks:
+    - q: "Why are color flips useful?"
+      a: "They split temporary 4-node structures without changing key order."
+    - q: "What invariant must hold on every root-to-leaf path?"
+      a: "Equal black-node count (black height)."
+  practice:
+    - "Trace insert sequence and annotate tree colors after each step."
+    - "Implement validation checks for red-red and black-height invariants."
+
+"/data-structures/trees/k-d-tree/":
+  prerequisites:
+    - "Know BST search idea and geometric distance basics."
+    - "Understand axis-aligned comparisons in 2D/3D."
+  objectives:
+    - "Apply axis rotation rule depth mod k during insert/search."
+    - "Trace nearest-neighbor backtracking and pruning."
+    - "Explain high-dimensional performance degradation."
+  example:
+    scenario: "Nearest neighbor query"
+    input: "Points: (7,2),(5,4),(9,6),(2,3),(4,7),(8,1), target=(6,3)"
+    transformation: "Descend near branch, update best, backtrack and prune/visit far branches by split-plane test"
+    output: "Nearest point returned (e.g., (7,2) or (5,4) depending on ties)"
+  checks:
+    - q: "Why can nearest-neighbor still become O(n)?"
+      a: "Pruning weakens when dimensions are high or data distribution is unfavorable."
+    - q: "What does split-plane test decide?"
+      a: "Whether far branch could still contain a closer point than current best."
+  practice:
+    - "Visualize insertion order and resulting split lines in 2D."
+    - "Log visited nodes during nearest queries to observe pruning efficiency."
+
+"/data-structures/trees/avl-tree/":
+  prerequisites:
+    - "Know BST insert/search and tree rotations."
+    - "Understand node-height computation."
+  objectives:
+    - "Use balance factor to detect AVL violations."
+    - "Differentiate LL/LR/RR/RL rotation fixes."
+    - "Maintain heights correctly after each update."
+  example:
+    scenario: "LL rebalance"
+    input: "Insert causes ancestor balance factor +2 with left child left-heavy"
+    transformation: "Single right rotation at imbalanced ancestor"
+    output: "Balance factors return to [-1,0,1]"
+  checks:
+    - q: "Why are AVL lookups usually faster than unbalanced BST?"
+      a: "AVL guarantees logarithmic height by rebalancing after updates."
+    - q: "What makes LR/RL cases require two rotations?"
+      a: "Imbalance direction at child opposes parent-heavy direction."
+  practice:
+    - "Implement insert with explicit balance-factor logging."
+    - "Construct a sequence that triggers each rotation case."
+
+"/data-structures/trees/heaps/":
+  prerequisites:
+    - "Know complete binary tree shape and array indexing math."
+    - "Understand priority queue semantics."
+  objectives:
+    - "Trace bubble-up and bubble-down repairs."
+    - "Explain O(n) build-heap vs O(n log n) repeated insert."
+    - "Design stable tie-breaking for equal priorities."
+  example:
+    scenario: "Min-heap push then pop"
+    input: "Heap array [1,3,5,7,9,8], push 4, then pop min"
+    transformation: "Push triggers bubble-up; pop swaps root with tail then bubble-down"
+    output: "Min extracted=1, heap property preserved"
+  checks:
+    - q: "Why is arbitrary key search in heap O(n)?"
+      a: "Heap only guarantees parent-child order, not full sorted order across siblings/subtrees."
+    - q: "What is parent index formula for child i?"
+      a: "(i-1)//2 in 0-indexed array representation."
+  practice:
+    - "Implement decrease-key and reheapify for a selected index."
+    - "Compare heap-based top-k vs full sort on large input."
+
+"/algorithms/string-based/distance-metrics/":
+  prerequisites:
+    - "Know string indexing and dynamic programming basics."
+    - "Understand edit operations (insert/delete/substitute)."
+  objectives:
+    - "Compute Hamming distance with equal-length requirement."
+    - "Fill Levenshtein DP table and interpret transitions."
+    - "Choose memory-optimized rolling-row variant when needed."
+  example:
+    scenario: "Levenshtein kitten -> sitting"
+    input: "a='kitten', b='sitting'"
+    transformation: "DP fills from prefix base cases using min(delete, insert, substitute)"
+    output: "Distance = 3"
+  checks:
+    - q: "Why is Hamming undefined for unequal lengths?"
+      a: "It compares aligned positions only; unequal lengths break one-to-one positional mapping."
+    - q: "What does dp[i][j] represent in Levenshtein?"
+      a: "Minimum edits to transform a[:i] into b[:j]."
+  practice:
+    - "Compute full DP table for 'abc' vs 'yabd' by hand."
+    - "Implement rolling-row Levenshtein and compare memory usage."
+
+"/algorithms/string-based/kmp/":
+  prerequisites:
+    - "Know basic substring search and prefix/suffix notion."
+    - "Understand why naive matching rechecks characters."
+  objectives:
+    - "Build LPS table correctly for any pattern."
+    - "Trace i/j pointer movement and fallback behavior."
+    - "Detect overlapping matches via j=lps[j-1]."
+  example:
+    scenario: "Pattern search with fallback"
+    input: "text='ababcabcabababd', pattern='ababd'"
+    transformation: "Matches advance both pointers; mismatches reuse LPS instead of restarting"
+    output: "Match indices: [10]"
+  checks:
+    - q: "What invariant does KMP preserve on mismatch?"
+      a: "The current matched prefix length is reduced to the longest reusable proper prefix via LPS."
+    - q: "Why can KMP remain O(n+m)?"
+      a: "Each text character is advanced without repeated full backtracking in the text."
+  practice:
+    - "Build LPS manually for pattern 'aabaaac'."
+    - "Run KMP trace for text 'banana', pattern 'ana' and record overlaps."
+
+"/algorithms/string-based/rabin-karp/":
+  prerequisites:
+    - "Know modulo arithmetic and rolling updates."
+    - "Understand hash collisions conceptually."
+  objectives:
+    - "Compute rolling hash updates in O(1) per shift."
+    - "Differentiate hash match from real substring match."
+    - "Select robust base/mod parameters and normalization."
+  example:
+    scenario: "Rolling hash substring scan"
+    input: "text='abracadabra', pattern='abra'"
+    transformation: "Slide window with rolling hash; verify only when hashes match"
+    output: "Match indices: [0,7]"
+  checks:
+    - q: "Why verify substring even when hashes match?"
+      a: "Collisions can produce equal hash values for different strings."
+    - q: "Why add mod after subtraction in some languages?"
+      a: "To normalize negative intermediate values into valid modular range."
+  practice:
+    - "Try two different mod primes and compare collision frequency experimentally."
+    - "Implement multi-pattern Rabin-Karp for a small pattern set."
+
+"/algorithms/lists/two-pointers/":
+  prerequisites:
+    - "Know sorted array properties."
+    - "Understand loop invariants and elimination logic."
+  objectives:
+    - "Apply left/right movement rules for sorted pair-sum search."
+    - "Explain why each move safely removes impossible candidates."
+    - "Handle duplicate and small-input edge cases cleanly."
+  example:
+    scenario: "Find pair summing to target"
+    input: "nums=[1,2,4,6,10], target=8"
+    transformation: "(1,10)->11 too high; move right. (1,6)->7 too low; move left. (2,6)->8 found"
+    output: "Indices (1,3)"
+  checks:
+    - q: "Why does this fail on unsorted input?"
+      a: "Pointer moves rely on monotonic ordering to eliminate ranges safely."
+    - q: "What is time complexity and why?"
+      a: "O(n), because each pointer moves inward at most n steps total."
+  practice:
+    - "Modify to return all unique value pairs in sorted input."
+    - "Implement two-pointer palindrome check on a string."
+
+"/algorithms/lists/sliding-window/":
+  prerequisites:
+    - "Know prefix sums and contiguous subarray concepts."
+    - "Understand maintaining state incrementally."
+  objectives:
+    - "Update fixed-size window sum in O(1) per shift."
+    - "Track running optimum while scanning once."
+    - "Validate k constraints before processing."
+  example:
+    scenario: "Maximum sum of size-3 window"
+    input: "nums=[2,1,5,1,3,2], k=3"
+    transformation: "Window sums: 8,7,9,6"
+    output: "Max sum = 9"
+  checks:
+    - q: "Why is this O(n) instead of O(nk)?"
+      a: "Each shift reuses previous sum by subtracting outgoing and adding incoming element."
+    - q: "What should happen when k>n?"
+      a: "Return explicit error/invalid input signal."
+  practice:
+    - "Adapt to minimum sum window of size k."
+    - "Extend to variable window (e.g., longest substring with <=K distinct chars)."
+
+"/algorithms/graph/traversals-bfs-dfs/":
+  prerequisites:
+    - "Know graph adjacency-list representation."
+    - "Understand queue vs stack/recursion behavior."
+  objectives:
+    - "Differentiate BFS layering vs DFS depth-first exploration."
+    - "Use visited sets to guarantee termination on cycles."
+    - "Select traversal based on problem goal."
+  example:
+    scenario: "Traverse directed graph from A"
+    input: "A->[B,C], B->[D], C->[E], D->[F], E->[F]"
+    transformation: "BFS explores by layers; DFS follows deepest branch before backtracking"
+    output: "BFS and DFS orders differ but both visit reachable nodes"
+  checks:
+    - q: "Why can recursive DFS fail on deep graphs?"
+      a: "Call-stack depth can exceed recursion limits/stack capacity."
+    - q: "When is BFS preferred over DFS for shortest path?"
+      a: "In unweighted graphs, BFS guarantees minimum edge-count distance."
+  practice:
+    - "Implement iterative DFS with explicit stack and compare order to recursive DFS."
+    - "Run full-graph traversal over disconnected components."
+
+"/algorithms/graph/dijkstra/":
+  prerequisites:
+    - "Know weighted graph representation and priority queues."
+    - "Understand relaxation concept in shortest-path algorithms."
+  objectives:
+    - "Apply relaxation with stale-entry guard correctly."
+    - "Interpret finalized distances when nodes are popped from min-heap."
+    - "Detect when Dijkstra is invalid (negative weights)."
+  example:
+    scenario: "Single-source shortest paths"
+    input: "A->B(4), A->C(1), C->B(2), B->D(1), C->D(5)"
+    transformation: "Heap pops nearest unsettled nodes; relax outgoing edges"
+    output: "dist(A)=0, dist(C)=1, dist(B)=3, dist(D)=4"
+  checks:
+    - q: "Why keep `if d > dist[u]: continue`?"
+      a: "Heap may contain stale entries for the same node after better paths were found."
+    - q: "Why does negative edge break correctness?"
+      a: "A previously finalized node could later receive a shorter path."
+  practice:
+    - "Add parent tracking to reconstruct actual shortest paths."
+    - "Compare runtime on sparse vs dense random graphs."
+
+"/algorithms/graph/topological-sort/":
+  prerequisites:
+    - "Know directed graph and in-degree definitions."
+    - "Understand DAG requirement for ordering constraints."
+  objectives:
+    - "Execute Kahn's algorithm step by step."
+    - "Detect cycles from incomplete output size."
+    - "Explain why multiple valid orders can exist."
+  example:
+    scenario: "Course/dependency scheduling"
+    input: "Math->[Algorithms,DataStructures], Algorithms->[Compilers], DataStructures->[Graphs], Graphs->[Compilers]"
+    transformation: "Repeatedly remove zero-indegree nodes and update neighbor indegrees"
+    output: "One valid order: [Math,Algorithms,DataStructures,Graphs,Compilers]"
+  checks:
+    - q: "What does it mean if queue becomes empty early?"
+      a: "A cycle blocks remaining nodes from reaching indegree 0."
+    - q: "Is topological order unique?"
+      a: "Not necessarily; queue tie order can produce different valid outputs."
+  practice:
+    - "Implement DFS-based topo sort with cycle colors and compare outputs."
+    - "Add deterministic tie-breaking (lexicographic queue) and observe changes."
+
+"/algorithms/tree/traversals/":
+  prerequisites:
+    - "Know binary tree node structure and recursion."
+    - "Understand explicit stack usage for iterative traversal."
+  objectives:
+    - "Differentiate preorder, inorder, and postorder semantics."
+    - "Implement recursive and iterative versions correctly."
+    - "Explain Morris traversal's O(1) extra-space tradeoff."
+  example:
+    scenario: "Traversal outputs on fixed binary tree"
+    input: "Tree: 1 root, left subtree 2(4,5), right child 3"
+    transformation: "Visit order changes based on when current node is processed"
+    output: "Pre=[1,2,4,5,3], In=[4,2,5,1,3], Post=[4,5,2,3,1]"
+  checks:
+    - q: "Why is inorder sorted only for BSTs?"
+      a: "Sorted output requires BST ordering invariant; generic binary trees lack this guarantee."
+    - q: "What must Morris traversal restore before exit?"
+      a: "All temporary threaded pointers must be removed to preserve original tree structure."
+  practice:
+    - "Implement iterative postorder using one stack and state tags."
+    - "Benchmark recursive vs iterative traversal on skewed trees."
+
+"/algorithms/tree/lowest-common-ancestor/":
+  prerequisites:
+    - "Know BST ordering property and ancestor definition."
+    - "Understand iterative descent logic."
+  objectives:
+    - "Locate LCA using BST split-point rule in O(h)."
+    - "Handle ancestor and equal-node special cases."
+    - "Know when key-existence validation is needed."
+  example:
+    scenario: "BST LCA query"
+    input: "BST rooted at 20, query p=5 and q=14"
+    transformation: "Both <20 so go left to 10; then split around 10"
+    output: "LCA key = 10"
+  checks:
+    - q: "When is one node itself the LCA?"
+      a: "When one target is an ancestor of the other."
+    - q: "Why can naive shortcut mislead when a key is absent?"
+      a: "Split point may be found even if one key does not actually exist in the tree."
+  practice:
+    - "Add contains() pre-checks and compare behavior with missing keys."
+    - "Implement general binary-tree LCA (no BST property) and compare complexity."

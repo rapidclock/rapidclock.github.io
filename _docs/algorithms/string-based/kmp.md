@@ -35,6 +35,30 @@ flowchart LR
   C --> A
 ```
 
+## Interactive Animation
+
+Use this widget to watch KMP move its `i` and `j` pointers, compare characters, and apply LPS fallback without re-checking old text.
+
+<div class="kmp-anim" data-text="ababcabcabababd" data-pattern="ababd" data-autoplay-ms="850"></div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: LPS Table Construction</p>
+  <div class="op-step">1. Start with lps[0] = 0 and two pointers i, len.</div>
+  <div class="op-step">2. If pattern[i] matches pattern[len], extend prefix length.</div>
+  <div class="op-step">3. Write length into lps[i] and advance i.</div>
+  <div class="op-step">4. On mismatch, fallback len to lps[len-1] without moving i.</div>
+  <div class="op-step">5. Continue until all pattern indices are processed.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Overlapping Matches</p>
+  <div class="op-step">1. Pattern found at index k.</div>
+  <div class="op-step">2. Do not reset j to 0 blindly.</div>
+  <div class="op-step">3. Set j = lps[j-1] to keep reusable prefix knowledge.</div>
+  <div class="op-step">4. Resume scanning at current text index i.</div>
+  <div class="op-step">5. Overlapping occurrences are detected correctly.</div>
+</div>
+
 ## Pseudocode
 
 ```text

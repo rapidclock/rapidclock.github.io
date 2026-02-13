@@ -113,6 +113,24 @@ Nearest-neighbor is not just descent; it is descent plus selective backtracking.
   <div class="op-step">5. Visit far branch only if improvement is possible.</div>
 </div>
 
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Insert + Query Loop</p>
+  <div class="op-step">1. Insert points while alternating axis by depth.</div>
+  <div class="op-step">2. Query descends quickly into likely region.</div>
+  <div class="op-step">3. Best candidate updated at visited nodes.</div>
+  <div class="op-step">4. Split-plane test decides far-branch pruning.</div>
+  <div class="op-step">5. Return nearest point with reduced search work.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: High-Dimension Pruning Collapse</p>
+  <div class="op-step">1. Feature dimension grows large.</div>
+  <div class="op-step">2. Split-plane checks prune fewer branches.</div>
+  <div class="op-step">3. More far branches must be explored.</div>
+  <div class="op-step">4. Runtime approaches linear scan behavior.</div>
+  <div class="op-step">5. Consider approximate NN structures for high dimensions.</div>
+</div>
+
 ### Illustration
 
 ```mermaid

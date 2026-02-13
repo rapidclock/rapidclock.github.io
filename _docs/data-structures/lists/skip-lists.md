@@ -118,6 +118,35 @@ node = node.next[0]
 return node != null and node.key == target
 ```
 
+## Animated Walkthroughs
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Part Animation: Search Across Levels</p>
+  <div class="op-step">1. Start on highest express lane at head.</div>
+  <div class="op-step">2. Move right while next key stays less than target.</div>
+  <div class="op-step">3. Drop down one level when blocked.</div>
+  <div class="op-step">4. Repeat until level 0 and perform final check.</div>
+  <div class="op-step">5. Return found/not-found.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Full Animation: Insert With Random Height</p>
+  <div class="op-step">1. Traverse and record update path predecessors.</div>
+  <div class="op-step">2. Roll random level for new node.</div>
+  <div class="op-step">3. Splice node into each level from 0 to new level.</div>
+  <div class="op-step">4. Raise global level if node is tallest.</div>
+  <div class="op-step">5. Future searches can skip larger ranges.</div>
+</div>
+
+<div class="operation-anim">
+  <p class="operation-anim-title">Edge-Case Animation: Top Level Shrink After Delete</p>
+  <div class="op-step">1. Delete node that was sole occupant of top lane.</div>
+  <div class="op-step">2. Top lane becomes empty.</div>
+  <div class="op-step">3. Global current level is decremented.</div>
+  <div class="op-step">4. Search now starts from next non-empty lane.</div>
+  <div class="op-step">5. Structure remains valid and compact.</div>
+</div>
+
 ## Full Examples
 
 <div class="code-tabs">
