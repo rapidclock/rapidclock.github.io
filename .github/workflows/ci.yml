@@ -21,7 +21,6 @@ jobs:
           args: >-
             --verbose
             --no-progress
-            --exclude-mail
             --exclude-path .github
             --exclude-path vendor
             --exclude-file .lycheeignore
