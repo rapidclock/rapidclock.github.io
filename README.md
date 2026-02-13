@@ -1,1 +1,1 @@
-# Welcome to the homepage of Rahul Thomas.
+# Welcome to the homepage of rapidclock.
