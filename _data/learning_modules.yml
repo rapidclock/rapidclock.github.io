@@ -240,6 +240,72 @@
     - "Implement decrease-key and reheapify for a selected index."
     - "Compare heap-based top-k vs full sort on large input."
 
+"/data-structures/trees/segment-tree/":
+  prerequisites:
+    - "Know recursion and divide-and-conquer interval splitting."
+    - "Understand prefix sums and why they fail for frequent updates."
+  objectives:
+    - "Trace overlap cases: no overlap, partial overlap, full coverage."
+    - "Implement O(log n) point update and O(log n) range query."
+    - "Explain why tree build is O(n), not O(n log n)."
+  example:
+    scenario: "Range sum with one point update"
+    input: "arr=[2,1,5,3,4,7,6,8], query [2,5], then set arr[3]=10"
+    transformation: "Query merges covered intervals; update rewrites leaf and recomputes ancestors"
+    output: "sum[2,5] changes from 19 to 26"
+  checks:
+    - q: "Why can range query skip whole subtrees?"
+      a: "If interval has no overlap, it contributes identity and recursion stops on that branch."
+    - q: "When is Fenwick tree often preferred over segment tree?"
+      a: "For simple prefix/range sums with point updates where lower memory and constants matter."
+  practice:
+    - "Implement segment tree for range minimum query by changing merge/identity."
+    - "Add lazy propagation for range increment updates."
+
+"/data-structures/trees/fenwick-tree/":
+  prerequisites:
+    - "Know binary representation and bitwise AND operation."
+    - "Understand prefix sums and delta-based updates."
+  objectives:
+    - "Use lowbit(i)=i&-i to navigate tree jumps."
+    - "Implement prefix sum and range sum in O(log n)."
+    - "Distinguish delta update from set update semantics."
+  example:
+    scenario: "Prefix/range sum after point set"
+    input: "arr=[2,1,5,3,4,7,6,8], range [2,5], then set index 3 to 10"
+    transformation: "Set computes delta, updates covering BIT nodes, range uses two prefix queries"
+    output: "range sum changes from 19 to 26"
+  checks:
+    - q: "Why is Fenwick tree usually 1-indexed internally?"
+      a: "Lowbit navigation relies on least-significant set bit arithmetic that maps cleanly with 1-based indices."
+    - q: "What is the update loop progression?"
+      a: "i += lowbit(i), which moves to the next node covering a larger range."
+  practice:
+    - "Build Fenwick tree with O(n) construction and compare with repeated adds."
+    - "Extend to 2D Fenwick tree for matrix prefix sums."
+
+"/data-structures/misc/union-find/":
+  prerequisites:
+    - "Know graph connected components at a conceptual level."
+    - "Understand parent pointers and recursion/iteration basics."
+  objectives:
+    - "Implement `find` with path compression correctly."
+    - "Apply union-by-rank to keep trees shallow."
+    - "Explain why amortized complexity is near-constant (`alpha(n)`)."
+  example:
+    scenario: "Dynamic connectivity session"
+    input: "n=8, unions: (0,1),(1,2),(3,4),(2,4),(6,7); queries: same(0,4), same(5,7)"
+    transformation: "Component roots merge by rank; repeated finds flatten parent paths."
+    output: "same(0,4)=true, same(5,7)=false, components=3"
+  checks:
+    - q: "Why does path compression improve future finds?"
+      a: "Visited nodes are rewired directly to the root, shortening future parent traversals."
+    - q: "Why do repeated unions on already-connected nodes not reduce component count?"
+      a: "Both elements already share the same root, so no merge occurs."
+  practice:
+    - "Implement union-by-size variant and compare behavior with union-by-rank."
+    - "Use Union-Find in Kruskal's algorithm and verify MST edge selection."
+
 "/algorithms/string-based/distance-metrics/":
   prerequisites:
     - "Know string indexing and dynamic programming basics."

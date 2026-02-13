@@ -272,3 +272,29 @@ func main() {
 
 </div>
 </div>
+
+## Advanced Cookbook Additions
+
+### Modeling Checklist Before Coding
+
+1. Define node identity type and uniqueness rules.
+2. Decide directed vs undirected semantics explicitly.
+3. Decide weighted vs unweighted representation.
+4. Choose adjacency list/matrix based on density and operation profile.
+5. Define edge-case behavior for isolated nodes and self-loops.
+
+### Data-Model Pitfalls
+
+1. Accidentally duplicating edges and inflating traversal work.
+2. Mixing one-based and zero-based node IDs in same pipeline.
+3. Treating undirected graph as directed in only one insertion path.
+4. Storing huge dense graphs in matrix form without memory budget analysis.
+
+### Production Pattern: Graph + Metadata Separation
+
+Keep topology and payload separate:
+
+- graph structure: neighbors and weights
+- metadata map: labels, timestamps, permissions, etc.
+
+This keeps traversal logic fast and avoids over-coupling graph algorithms with domain-specific payload objects.

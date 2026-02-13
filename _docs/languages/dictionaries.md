@@ -278,3 +278,47 @@ func main() {
 | Lookup | O(1) | O(1) extra |
 | Delete | O(1) | O(1) extra |
 | Iterate all pairs | O(n) | O(1) extra |
+
+## Advanced Cookbook Additions
+
+### Pattern: Dictionary as Aggregation Engine
+
+Dictionaries/maps are often the safest default for aggregation tasks:
+
+- frequency counting
+- grouping by key
+- last-seen index tracking
+- dedup with metadata
+
+### How-To: Group Records by Key
+
+```python
+from collections import defaultdict
+
+
+def group_by_country(rows: list[dict]) -> dict[str, list[dict]]:
+    out: dict[str, list[dict]] = defaultdict(list)
+    for row in rows:
+        key = row.get("country", "UNKNOWN")
+        out[key].append(row)
+    return dict(out)
+```
+
+### Pattern: Defensive Access at Boundaries
+
+When parsing untrusted payloads, do not chain direct key access blindly (`obj["a"]["b"]["c"]`).
+
+Use explicit validation or guarded access with clear error handling.
+
+### Hash-Map Caveats
+
+1. Key mutability must be controlled (`hash`/equality contract).
+2. Iteration order guarantees differ by language/runtime version.
+3. For large maps, memory overhead can dominate if values are tiny.
+4. Concurrent writes require synchronization strategy.
+
+### Performance Checklist
+
+1. Reserve capacity when large map growth is expected.
+2. Avoid repeated recomputation of expensive keys in hot loops.
+3. Use integer/enum keys where practical for tighter memory/perf behavior.

@@ -288,3 +288,36 @@ Another standard approach uses DFS with three-color state (`unvisited`, `visitin
 - Append node after visiting all descendants.
 - Reverse final list to get topological order.
 - Encountering an edge to a `visiting` node indicates a cycle.
+
+## Advanced Cookbook Additions
+
+### Selection Notes
+
+Use topological sort when constraints are precedence edges in a DAG.
+
+Examples:
+
+- build pipelines
+- task schedulers
+- migration ordering
+- compiler stage dependencies
+
+### Determinism Guidance
+
+Multiple valid topo orders often exist.
+
+If deterministic output is required:
+
+1. use stable queue discipline (e.g., lexicographic/min-heap)
+2. document tie-breaking rules
+3. test with graphs that have multiple valid orders
+
+### Cycle Diagnostics Pattern
+
+When cycle exists, provide actionable output:
+
+- list nodes with unresolved in-degree
+- include sample back-edge (if using DFS color tracking)
+- map cycle to domain entities (task names, module names)
+
+This turns "cycle detected" from vague error into debuggable feedback.

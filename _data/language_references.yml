@@ -135,6 +135,51 @@
         - title: "path/filepath"
           url: "https://pkg.go.dev/path/filepath"
 
+"/languages/file-formats/":
+  description: "Primary format-parser docs for CSV, JSON, TOML, and YAML across Python, Rust, and Go."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "csv module"
+          url: "https://docs.python.org/3/library/csv.html"
+        - title: "json module"
+          url: "https://docs.python.org/3/library/json.html"
+        - title: "tomllib module"
+          url: "https://docs.python.org/3/library/tomllib.html"
+    - label: "Python (External)"
+      kind: external
+      links:
+        - title: "tomli-w"
+          url: "https://pypi.org/project/tomli-w/"
+        - title: "PyYAML documentation"
+          url: "https://pyyaml.org/wiki/PyYAMLDocumentation"
+    - label: "Rust (Ecosystem)"
+      kind: external
+      links:
+        - title: "csv crate"
+          url: "https://docs.rs/csv/latest/csv/"
+        - title: "serde_json crate"
+          url: "https://docs.rs/serde_json/latest/serde_json/"
+        - title: "toml crate"
+          url: "https://docs.rs/toml/latest/toml/"
+        - title: "serde_yaml crate"
+          url: "https://docs.rs/serde_yaml/latest/serde_yaml/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "encoding/csv"
+          url: "https://pkg.go.dev/encoding/csv"
+        - title: "encoding/json"
+          url: "https://pkg.go.dev/encoding/json"
+    - label: "Go (External)"
+      kind: external
+      links:
+        - title: "go-toml/v2"
+          url: "https://pkg.go.dev/github.com/pelletier/go-toml/v2"
+        - title: "gopkg.in/yaml.v3"
+          url: "https://pkg.go.dev/gopkg.in/yaml.v3"
+
 "/languages/tcp-streams/":
   description: "Primary networking references for TCP clients/servers and stream behavior."
   groups:
@@ -244,6 +289,39 @@
           url: "https://docs.rs/crossbeam/latest/crossbeam/"
         - title: "crossbeam GitHub"
           url: "https://github.com/crossbeam-rs/crossbeam"
+
+"/languages/general/logging/":
+  description: "Official logging references and common ecosystem crates/packages for production logging pipelines."
+  groups:
+    - label: "Python (Official)"
+      kind: stdlib
+      links:
+        - title: "logging module"
+          url: "https://docs.python.org/3/library/logging.html"
+        - title: "logging.config"
+          url: "https://docs.python.org/3/library/logging.config.html"
+        - title: "logging.handlers"
+          url: "https://docs.python.org/3/library/logging.handlers.html"
+    - label: "Rust (Official + Ecosystem)"
+      kind: external
+      links:
+        - title: "log facade crate"
+          url: "https://docs.rs/log/latest/log/"
+        - title: "tracing crate"
+          url: "https://docs.rs/tracing/latest/tracing/"
+        - title: "tracing-subscriber"
+          url: "https://docs.rs/tracing-subscriber/latest/tracing_subscriber/"
+        - title: "tracing-appender"
+          url: "https://docs.rs/tracing-appender/latest/tracing_appender/"
+    - label: "Go (Official)"
+      kind: stdlib
+      links:
+        - title: "log/slog"
+          url: "https://pkg.go.dev/log/slog"
+        - title: "log package"
+          url: "https://pkg.go.dev/log"
+        - title: "io.MultiWriter"
+          url: "https://pkg.go.dev/io#MultiWriter"
 
 "/languages/language-features/python/":
   description: "Authoritative references for Python language features and core runtime protocols."

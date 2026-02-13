@@ -217,3 +217,35 @@ func main() {
 - Handle partial reads/writes; never assume one `read` equals one message.
 - Use TLS for Internet traffic (`ssl` in Python, `rustls`/`native-tls` ecosystem in Rust, `crypto/tls` in Go).
 - Use protocol-level framing (length-prefix, varint-length, newline, etc.).
+
+## Advanced Cookbook Additions
+
+### TCP Reality Checklist
+
+1. TCP is a byte stream, not a message protocol.
+2. One `send` does not imply one `recv` on peer side.
+3. Reads may return partial frames; framing is your responsibility.
+4. Backpressure must be respected to avoid memory blowups.
+
+### Framing Strategies
+
+Common options:
+
+- delimiter-based (line protocol)
+- length-prefixed binary frames
+- fixed-size records (only for constrained formats)
+
+Pick one and make it explicit in protocol docs and tests.
+
+### Half-Close and Connection Lifecycle
+
+- peer may close write side while still reading
+- distinguish EOF from transient timeout
+- ensure graceful shutdown semantics are documented
+
+### Reliability and Security Notes
+
+1. enforce read/write deadlines
+2. validate frame size bounds before allocation
+3. protect against slowloris-style peer behavior
+4. handle reconnect policy separately from transport parsing logic

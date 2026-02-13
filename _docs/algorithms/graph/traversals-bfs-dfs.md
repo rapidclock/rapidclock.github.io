@@ -257,3 +257,32 @@ func main() {
 
 </div>
 </div>
+
+## Advanced Cookbook Additions
+
+### Traversal Strategy Matrix
+
+| Constraint | Prefer | Reason |
+| --- | --- | --- |
+| shortest edge-count path in unweighted graph | BFS | explores by distance layers |
+| deep structural exploration / cycle checks | DFS | natural recursion/stack model |
+| very deep graph where recursion depth is risky | iterative DFS/BFS | avoids call-stack overflow |
+
+### Production Debugging Pattern
+
+When traversal output looks wrong:
+
+1. log queue/stack state per step for tiny failing graph
+2. log visited set mutations
+3. verify adjacency construction first (wrong graph model is common)
+4. confirm directed-vs-undirected edge insertion policy
+
+### Complexity Reality
+
+Even with `O(V+E)` asymptotics, constants are dominated by:
+
+- adjacency representation choice
+- memory locality
+- repeated allocation of temporary collections
+
+For hot paths, pre-size and reuse work buffers.

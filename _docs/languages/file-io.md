@@ -307,3 +307,54 @@ func main() {
 
 </div>
 </div>
+
+## Advanced Cookbook Additions
+
+### Pattern: Atomic Write for Critical Files
+
+For configuration/state files, prefer write-to-temp + rename:
+
+1. write complete payload to temp file in same directory
+2. flush/sync as needed
+3. atomically replace target path
+
+This avoids partial-file corruption on crash/power loss.
+
+### How-To: Atomic Text Write (Python)
+
+```python
+from pathlib import Path
+import os
+import tempfile
+
+
+def atomic_write_text(path: Path, data: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=path.name, text=True)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+    finally:
+        try:
+            os.remove(tmp)
+        except FileNotFoundError:
+            pass
+```
+
+### Pattern: Streaming Parser Boundaries
+
+When files are large:
+
+- stream line-by-line/chunk-by-chunk
+- process records incrementally
+- avoid building giant in-memory strings unless needed
+
+### Reliability Checklist
+
+1. Always specify encoding for text files.
+2. Validate path assumptions (existence, permissions, symlink policy).
+3. Handle partial reads/writes and cleanup temporary resources.
+4. Distinguish retryable IO failures from permanent path/config errors.

@@ -1,5 +1,5 @@
 ---
-title: Go Specific Patterns
+title: Go
 description: Idiomatic Go patterns with practical tradeoffs, use cases, and production edge cases.
 permalink: /languages/language-specifics/go-patterns/
 ---
@@ -491,3 +491,266 @@ func TestAdd(t *testing.T) {
    Ignoring errors hides operational problems.
 5. Data races:
    Use `go test -race` regularly on concurrent paths.
+
+## Advanced Pattern Layer
+
+## Pattern 9: Graceful Shutdown As A First-Class Design
+
+### Basic Idea
+
+Treat shutdown as part of normal control flow: stop intake, cancel background work, wait for in-flight operations, then exit.
+
+### Pros
+
+- fewer dropped requests/jobs
+- predictable process lifecycle
+- cleaner deployments and restarts
+
+### Cons
+
+- requires explicit coordination design
+
+### When To Use
+
+- API servers
+- worker daemons
+- streaming processors
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"sync"
+	"time"
+)
+
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		ticker := time.NewTicker(100 * time.Millisecond)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-ticker.C:
+				fmt.Println("worker tick")
+			case <-ctx.Done():
+				fmt.Println("worker stopping")
+				return
+			}
+		}
+	}()
+
+	time.Sleep(250 * time.Millisecond)
+	cancel()
+	wg.Wait()
+}
+```
+
+### Edge Cases
+
+- Ensure every goroutine has a shutdown signal path.
+- Avoid indefinite waits by adding timeout around shutdown wait.
+
+## Pattern 10: Error Classification With `errors.Is` / `errors.As`
+
+### Basic Idea
+
+Use wrapped errors and typed/sentinel errors so callers can classify behavior without string parsing.
+
+### Pros
+
+- reliable branching for retry/HTTP mapping
+- preserves causal chain
+
+### Cons
+
+- requires consistent error contract discipline
+
+### When To Use
+
+- boundary adapters
+- transport/domain translation layers
+
+### Example
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrNotFound = errors.New("not found")
+
+type ValidationError struct{ Msg string }
+
+func (e ValidationError) Error() string { return e.Msg }
+
+func loadUser(id int) error {
+	if id == 0 {
+		return ValidationError{Msg: "id must be positive"}
+	}
+	return fmt.Errorf("loadUser: %w", ErrNotFound)
+}
+
+func main() {
+	err := loadUser(7)
+	if errors.Is(err, ErrNotFound) {
+		fmt.Println("map to 404")
+	}
+
+	err = loadUser(0)
+	var ve ValidationError
+	if errors.As(err, &ve) {
+		fmt.Println("validation:", ve.Msg)
+	}
+}
+```
+
+### Edge Cases
+
+- Wrap with `%w` when caller needs `Is`/`As` inspection.
+- Keep sentinel error set small and meaningful.
+
+## Pattern 11: Package Boundary Discipline (`internal` + small public API)
+
+### Basic Idea
+
+Constrain package visibility and keep exported API surface small and stable.
+
+### Pros
+
+- lower accidental coupling across modules
+- safer refactoring
+- clearer ownership of implementation details
+
+### Cons
+
+- requires up-front package organization decisions
+
+### When To Use
+
+- medium/large services with many packages
+- libraries that need compatibility guarantees
+
+### Example
+
+```text
+myservice/
+  cmd/api/main.go
+  internal/repository/
+  internal/service/
+  pkg/contracts/
+```
+
+Keep business wiring in `internal/*`; expose only intentional contracts in `pkg/*` if needed.
+
+### Edge Cases
+
+- Do not split packages too early; prefer coherent domain-oriented boundaries.
+- Avoid circular imports by keeping dependency direction clear.
+
+## Pattern 12: Structured Logging With Contextual Scoping
+
+### Basic Idea
+
+Use `log/slog` with scoped fields (`logger.With(...)`) so logs carry stable keys across request/job lifecycle.
+
+### Pros
+
+- queryable logs for incident debugging
+- consistent key naming across services
+
+### Cons
+
+- high-cardinality fields can explode log volume/storage
+
+### When To Use
+
+- HTTP handlers, worker loops, external boundary adapters
+
+### Example
+
+```go
+package main
+
+import (
+	"log/slog"
+	"os"
+)
+
+func main() {
+	base := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+	reqLog := base.With("request_id", "req-123", "component", "api")
+
+	reqLog.Info("begin")
+	reqLog.Warn("cache miss", "key", "user:42")
+	reqLog.Info("end", "duration_ms", 17)
+}
+```
+
+### Edge Cases
+
+- Never log secrets/tokens in clear text.
+- Standardize key names (`request_id`, `user_id`, `operation`) across codebase.
+
+## Architecture Playbooks (Go Specifics)
+
+### HTTP Service
+
+- handler layer: bind/validate/map response
+- service layer: domain policy
+- repository layer: persistence/external systems
+- middleware: logging/auth/timeout/recovery
+
+### Worker Service
+
+- bounded queue + worker pool
+- context cancellation for shutdown
+- error classification + retry policy per job type
+
+### CLI/Batch Tool
+
+- parse flags/env once
+- setup logger once
+- return explicit exit codes by error class
+
+## Testing and Verification Checklist
+
+1. Run `go test -race` on concurrency-heavy packages.
+2. Test shutdown behavior with cancellation and timeout scenarios.
+3. Add contract tests for wrapped error classification (`Is`/`As`).
+4. Verify channel ownership and close behavior in tests.
+5. Test table-driven cases for both happy and edge paths.
+
+## Go-Specific Anti-Patterns and Fixes
+
+1. Goroutine spawned without lifecycle ownership.
+   Fix: tie goroutine to context and wait group.
+2. Large interfaces shared globally.
+   Fix: define small consumer-side interfaces.
+3. `panic` for expected runtime errors.
+   Fix: return explicit wrapped errors and classify at boundary.
+4. Closing channels from multiple goroutines.
+   Fix: document single close owner.
+5. Logging unstructured blobs.
+   Fix: structured fields with stable key schema.
+
+## Advanced Pattern Selection Guide
+
+| Problem | Strong pattern |
+| --- | --- |
+| controlled process restart behavior | graceful shutdown pattern |
+| precise caller-side error branching | `errors.Is` / `errors.As` classification |
+| avoiding package sprawl and hidden coupling | boundary discipline with `internal` |
+| searchable and actionable production logs | structured logging with scoped fields |
+| bounded high-throughput background processing | worker pool + context cancellation |
